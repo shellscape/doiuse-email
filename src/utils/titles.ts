@@ -118,6 +118,8 @@ export function getMatchingUnitTitles(propertyValue: string) {
 
 export const functionTitles = fromTitleEntries</* function name */ string>(
 	Object.keys(getCSSFeatures()).map((title) => {
+		if (title.startsWith(':')) return;
+
 		if (title === 'CSS Variables (Custom Properties)') {
 			return {
 				title,
@@ -189,6 +191,18 @@ export const selectorTitles = fromTitleEntries<RegExp>(
 	})
 );
 
+export function getMatchingSelectorTitles(selector: string) {
+	const matchingSelectorTitles: string[] = [];
+
+	for (const [selectorTitle, selectorRegex] of Object.entries(selectorTitles)) {
+		if (selectorRegex.test(selector)) {
+			matchingSelectorTitles.push(selectorTitle);
+		}
+	}
+
+	return matchingSelectorTitles;
+}
+
 export const psuedoSelectorTitles = fromTitleEntries<string>(
 	Object.keys(getCSSFeatures()).map((title) => {
 		if (!title.startsWith(':')) return;
@@ -200,16 +214,38 @@ export const psuedoSelectorTitles = fromTitleEntries<string>(
 	})
 );
 
-export function getMatchingPsuedoSelectorTitles(selector: string) {
-	const matchingSelectorTitles: string[] = [];
+export function getMatchingPseudoSelectorTitles(selector: string) {
+	const matchingPseudoSelectorTitles: string[] = [];
 
 	for (const [selectorTitle, selectorValue] of Object.entries(
 		psuedoSelectorTitles
 	)) {
 		if (selector.includes(selectorValue)) {
-			matchingSelectorTitles.push(selectorTitle);
+			matchingPseudoSelectorTitles.push(selectorTitle);
 		}
 	}
 
-	return matchingSelectorTitles;
+	return matchingPseudoSelectorTitles;
+}
+
+export const keywordTitles = fromTitleEntries<string>(
+	Object.keys(getCSSFeatures()).map((title) => {
+		if (!title.includes(' keyword')) return;
+
+		return {
+			title,
+			value: title.replace(/ keyword$/, ''),
+		};
+	})
+);
+
+export function getMatchingKeywordTitles(propertyValue: string) {
+	const matchingKeywordTitles: string[] = [];
+	for (const [keywordTitle, keywordValue] of Object.entries(keywordTitles)) {
+		if (propertyValue.includes(keywordValue)) {
+			matchingKeywordTitles.push(keywordTitle);
+		}
+	}
+
+	return matchingKeywordTitles;
 }

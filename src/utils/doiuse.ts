@@ -1,6 +1,5 @@
 import type { Comment, Declaration, Rule, Stylesheet } from 'css';
 import { getProperty } from 'dot-prop';
-import zip from 'just-zip-it';
 import type { Document } from 'parse5';
 
 import type { EmailClient } from '~/types/email-client.js';
@@ -12,6 +11,7 @@ import {
 	getMatchingFunctionTitles,
 	getMatchingPropertyTitles,
 	getMatchingPropertyValuePairTitles,
+	getMatchingPsuedoSelectorTitles,
 	getMatchingUnitTitles,
 } from '~/utils/titles.js';
 
@@ -84,7 +84,13 @@ export class DoIUse {
 		}
 	}
 
-	checkCSSSelectors(selectors: string[]) {}
+	checkCSSSelectors(selectors: string[]) {
+		for (const selector of selectors) {
+			const matchingPsuedoSelectorTitles =
+				getMatchingPsuedoSelectorTitles(selector);
+			this.checkFeaturesSupport(matchingPsuedoSelectorTitles);
+		}
+	}
 
 	checkStylesheet(stylesheet: Stylesheet) {
 		for (const stylesheetRule of stylesheet.stylesheet?.rules ?? []) {

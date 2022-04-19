@@ -1,13 +1,16 @@
-import { expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
-import caniemail from '~/utils/data.js';
 import {
 	atRuleTitles,
+	functionTitles,
+	keywordTitles,
 	propertyTitles,
 	propertyValuePairTitles,
+	psuedoSelectorTitles,
 	selectorTitles,
 	unitTitles,
 } from '~/utils/titles.js';
+import caniemail from '~data/can-i-email.json';
 
 const allCSSTitles = caniemail.data
 	.filter((d) => d.category === 'css')
@@ -117,9 +120,49 @@ const expectedUnitTitles = [
 	'vh unit',
 	'vmax unit',
 	'vmin unit',
+	'vw unit',
 ];
 
-export const expectedSelectorTitles = [
+const expectedFunctionTitles = [
+	'CSS Variables (Custom Properties)',
+	'CSS calc() function',
+	'clamp()',
+	'radial-gradient()',
+	'linear-gradient()',
+	'max()',
+	'min()',
+	'rgb()',
+	'rgba()',
+];
+
+const expectedPseudoSelectorTitles = [
+	':active',
+	':checked',
+	':first-child',
+	':first-of-type',
+	':focus',
+	':has()',
+	':hover',
+	':last-child',
+	':last-of-type',
+	':link',
+	':not',
+	':nth-child',
+	':nth-last-child',
+	':nth-last-of-type',
+	':nth-of-type',
+	':only-child',
+	':only-of-type',
+	':target',
+	':visited',
+	'::after',
+	'::before',
+	'::first-letter',
+	'::first-line',
+	'::placeholder',
+];
+
+const expectedSelectorTitles = [
 	'Adjacent sibling combinator',
 	'Attribute selector',
 	'Chaining selectors',
@@ -133,29 +176,61 @@ export const expectedSelectorTitles = [
 	'Universal selector *',
 ];
 
+const expectedKeywordTitles = ['!important keyword'];
+
 function expectEqualTitles(
 	titles: Record<string, unknown>,
 	actualTitles: string[]
 ) {
-	expect(new Set(Object.keys(titles))).toEqual(actualTitles);
+	expect(Object.keys(titles).sort()).toEqual(actualTitles.sort());
 }
 
-test('css titles', () => {
-	expectEqualTitles(propertyTitles, expectedPropertyTitles);
-	expectEqualTitles(atRuleTitles, expectedAtRuleTitles);
-	expectEqualTitles(propertyValuePairTitles, expectedPropertyValuePairTitles);
-	expectEqualTitles(unitTitles, expectedUnitTitles);
-	expectEqualTitles(selectorTitles, expectedSelectorTitles);
-	expectEqualTitles(
-		{
-			...propertyTitles,
-			...atRuleTitles,
-			...propertyValuePairTitles,
-			...unitTitles,
-			...selectorTitles,
-		},
-		allCSSTitles
-	);
+describe('css titles', () => {
+	test('property titles', () => {
+		expectEqualTitles(propertyTitles, expectedPropertyTitles);
+	});
 
-	expect(new Set([]));
+	test('at rule titles', () => {
+		expectEqualTitles(atRuleTitles, expectedAtRuleTitles);
+	});
+
+	test('property value pair titles', () => {
+		expectEqualTitles(propertyValuePairTitles, expectedPropertyValuePairTitles);
+	});
+
+	test('unit titles', () => {
+		expectEqualTitles(unitTitles, expectedUnitTitles);
+	});
+
+	test('selector titles', () => {
+		expectEqualTitles(selectorTitles, expectedSelectorTitles);
+	});
+
+	test('function titles', () => {
+		expectEqualTitles(functionTitles, expectedFunctionTitles);
+	});
+
+	test('pseudo selector titles', () => {
+		expectEqualTitles(psuedoSelectorTitles, expectedPseudoSelectorTitles);
+	});
+
+	test('keyword titles', () => {
+		expectEqualTitles(keywordTitles, expectedKeywordTitles);
+	});
+
+	test('all titles', () => {
+		expectEqualTitles(
+			{
+				...propertyTitles,
+				...atRuleTitles,
+				...propertyValuePairTitles,
+				...unitTitles,
+				...selectorTitles,
+				...psuedoSelectorTitles,
+				...functionTitles,
+				...keywordTitles,
+			},
+			allCSSTitles
+		);
+	});
 });

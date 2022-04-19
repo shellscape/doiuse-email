@@ -4,15 +4,10 @@
 		"rootDir": "..",
 		"baseUrl": ".",
 		"paths": {
-			"~/*": [
-				"../src/*"
-			],
-			"~test/*": [
-				"./*"
-			]
-		}
+			"~/*": ["../src/*"],
+			"~test/*": ["./*"]
+		},
+		"types": ["../typings/data"]
 	},
-	"include": [
-		"./"
-	]
+	"include": ["./"]
 }
