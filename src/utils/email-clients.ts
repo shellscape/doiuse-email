@@ -1,4 +1,5 @@
 import type { EmailClient, EmailClientFamily } from '~/types/email-client.js';
+import type { IsSupported } from '~/types/features.js';
 import type { DoIUseEmailOptions } from '~/types/options.js';
 
 export const emailClientFamiliesList = [
@@ -83,4 +84,8 @@ export function getEmailClientsFromOptions(
 	}
 
 	return [...emailClients];
+}
+
+export function isEmailClientSupported(stats: Record<string, IsSupported>) {
+	return Object.values(stats).includes('y');
 }
