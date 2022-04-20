@@ -4,7 +4,6 @@ import {
 	attributeTitles,
 	elementAttributePairTitles,
 	elementTitles,
-	miscellaneousTitles,
 } from '~/utils/titles/html.js';
 import caniemail from '~data/can-i-email.json';
 
@@ -85,8 +84,6 @@ const expectedElementAttributePairTitles = [
 	'mailto: links',
 ];
 
-const expectedMiscellaneousTitles = [];
-
 function expectEqualTitles(
 	titles: Record<string, unknown>,
 	actualTitles: string[]
@@ -116,7 +113,6 @@ describe('css titles', () => {
 				...elementTitles,
 				...attributeTitles,
 				...elementAttributePairTitles,
-				...miscellaneousTitles,
 			},
 			allHTMLTitles
 		);

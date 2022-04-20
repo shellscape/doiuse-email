@@ -28,7 +28,11 @@ export const propertyTitles = fromTitleEntries<string[]>(
 	})
 );
 
-export function getMatchingPropertyTitles(propertyName: string): string[] {
+export function getMatchingPropertyTitles({
+	propertyName,
+}: {
+	propertyName: string;
+}): string[] {
 	const matchingPropertyTitles: string[] = [];
 
 	for (const [title, propertyNames] of Object.entries(propertyTitles)) {
@@ -54,14 +58,17 @@ export const propertyValuePairTitles = fromTitleEntries<
 	})
 );
 
-export function getMatchingPropertyValuePairTitles(
-	property: string,
-	propertyValue: string
-): string[] {
+export function getMatchingPropertyValuePairTitles({
+	propertyName,
+	propertyValue,
+}: {
+	propertyName: string;
+	propertyValue: string;
+}): string[] {
 	const matchingPropertyValuePairTitles: string[] = [];
 
 	for (const [title, value] of Object.entries(propertyValuePairTitles)) {
-		if (value[0] === property && value[1] === propertyValue) {
+		if (value[0] === propertyName && value[1] === propertyValue) {
 			matchingPropertyValuePairTitles.push(title);
 		}
 	}
@@ -75,10 +82,21 @@ export const atRuleTitles = fromTitleEntries<string>(
 
 		return {
 			title,
-			value: title,
+			value: title.replace(/^@/, ''),
 		};
 	})
 );
+
+export function getMatchingAtRuleTitles({ atRules }: { atRules: string[] }) {
+	const matchingAtRuleTitles: string[] = [];
+	for (const [atRuleTitle, atRuleValue] of Object.entries(atRuleTitles)) {
+		if (atRules.includes(atRuleValue)) {
+			matchingAtRuleTitles.push(atRuleTitle);
+		}
+	}
+
+	return matchingAtRuleTitles;
+}
 
 export const unitTitles = fromTitleEntries<string>(
 	Object.keys(getCSSFeatures()).map((title) => {
@@ -91,7 +109,11 @@ export const unitTitles = fromTitleEntries<string>(
 	})
 );
 
-export function getMatchingUnitTitles(propertyValue: string) {
+export function getMatchingUnitTitles({
+	propertyValue,
+}: {
+	propertyValue: string;
+}) {
 	const matchingUnitTitles: string[] = [];
 
 	for (const [unitTitle, unit] of Object.entries(unitTitles)) {
@@ -134,7 +156,11 @@ export const functionTitles = fromTitleEntries</* function name */ string>(
 	})
 );
 
-export function getMatchingFunctionTitles(propertyValue: string) {
+export function getMatchingFunctionTitles({
+	propertyValue,
+}: {
+	propertyValue: string;
+}) {
 	const matchingFunctionNames: string[] = [];
 
 	// Match `<function>(` (e.g. `max(`, `calc(`)
@@ -182,7 +208,7 @@ export const selectorTitles = fromTitleEntries<RegExp>(
 	})
 );
 
-export function getMatchingSelectorTitles(selector: string) {
+export function getMatchingSelectorTitles({ selector }: { selector: string }) {
 	const matchingSelectorTitles: string[] = [];
 
 	for (const [selectorTitle, selectorRegex] of Object.entries(selectorTitles)) {
@@ -205,7 +231,11 @@ export const psuedoSelectorTitles = fromTitleEntries<string>(
 	})
 );
 
-export function getMatchingPseudoSelectorTitles(selector: string) {
+export function getMatchingPseudoSelectorTitles({
+	selector,
+}: {
+	selector: string;
+}) {
 	const matchingPseudoSelectorTitles: string[] = [];
 
 	for (const [selectorTitle, selectorValue] of Object.entries(
@@ -230,7 +260,11 @@ export const keywordTitles = fromTitleEntries<string>(
 	})
 );
 
-export function getMatchingKeywordTitles(propertyValue: string) {
+export function getMatchingKeywordTitles({
+	propertyValue,
+}: {
+	propertyValue: string;
+}) {
 	const matchingKeywordTitles: string[] = [];
 	for (const [keywordTitle, keywordValue] of Object.entries(keywordTitles)) {
 		if (propertyValue.includes(keywordValue)) {

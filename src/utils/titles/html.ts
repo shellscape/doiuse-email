@@ -51,6 +51,18 @@ export const elementTitles = fromTitleEntries<string[]>(
 	})
 );
 
+export function getMatchingElementTitles({ tagName }: { tagName: string }) {
+	const matchingElementTitles: string[] = [];
+
+	for (const [elementTitle, elementTags] of Object.entries(elementTitles)) {
+		if (elementTags.includes(tagName)) {
+			matchingElementTitles.push(elementTitle);
+		}
+	}
+
+	return matchingElementTitles;
+}
+
 export const attributeTitles = fromTitleEntries<string[]>(
 	Object.keys(getHTMLFeatures()).map((title) => {
 		if (title === 'srcset and sizes attributes') {
@@ -68,6 +80,24 @@ export const attributeTitles = fromTitleEntries<string[]>(
 		};
 	})
 );
+
+export function getMatchingAttributeTitles({
+	attributes,
+}: {
+	attributes: string[];
+}) {
+	const matchingAttributeTitles: string[] = [];
+
+	for (const [attributeTitle, attributeValues] of Object.entries(
+		attributeTitles
+	)) {
+		if (attributeValues.some((attribute) => attributes.includes(attribute))) {
+			matchingAttributeTitles.push(attributeTitle);
+		}
+	}
+
+	return matchingAttributeTitles;
+}
 
 export const elementAttributePairTitles = fromTitleEntries<{
 	element: string;
@@ -116,3 +146,56 @@ export const elementAttributePairTitles = fromTitleEntries<{
 		};
 	})
 );
+
+export function getMatchingElementAttributePairTitles({
+	tagName,
+	attributes,
+}: {
+	tagName: string;
+	attributes: Record<string, string>;
+}) {
+	const matchingElementAttributePairTitles: string[] = [];
+
+	for (const [
+		elementAttributePairTitle,
+		elementAttributePairValues,
+	] of Object.entries(elementAttributePairTitles)) {
+		// Don't bother trying to match if the elements aren't even equal
+		if (elementAttributePairValues.element !== tagName) continue;
+
+		for (const attributeMatcher of elementAttributePairValues.attributes) {
+			// If the attribute matcher is a string, we just check whether the element contains the attribute name
+			if (
+				typeof attributeMatcher === 'string' &&
+				Object.keys(attributes).includes(attributeMatcher)
+			) {
+				matchingElementAttributePairTitles.push(elementAttributePairTitle);
+			}
+			// If the attribute matcher is an array, we check each attribute name against an expected attribute value
+			else if (Array.isArray(attributeMatcher)) {
+				const attributeName = attributeMatcher[0];
+				const attributeValue = attributeMatcher[1];
+
+				// If the attribute doesn't even exist, try checking the next attribute
+				if (attributes[attributeName] === undefined) continue;
+
+				// If the attribute to match is a string, we check for equality
+				if (
+					typeof attributeValue === 'string' &&
+					attributes[attributeName] === attributeValue
+				) {
+					matchingElementAttributePairTitles.push(elementAttributePairTitle);
+				}
+				// If the attribute to match is a regex, we check if the regex matches
+				else if (
+					attributeValue instanceof RegExp &&
+					attributeValue.test(attributes[attributeName]!)
+				) {
+					matchingElementAttributePairTitles.push(elementAttributePairTitle);
+				}
+			}
+		}
+	}
+
+	return matchingElementAttributePairTitles;
+}
