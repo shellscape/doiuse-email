@@ -6,6 +6,7 @@
 		"paths": {
 			"~/*": ["./src/*"]
 		},
+		"allowJs": true,
 		"types": ["node"]
 	},
 	"include": ["./src", "./typings"]
