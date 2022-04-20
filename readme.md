@@ -32,10 +32,10 @@ console.log(result);
 /*
 {
   "notes": [
-    "Note about \`<body> element\` support for \`gmail.desktop-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
-    "Note about \`<body> element\` support for \`gmail.ios\`: Partial. Replaced by a \`<div>\` with supported attributes.",
-    "Note about \`<body> element\` support for \`gmail.android\`: Partial. Replaced by a \`<div>\` with supported attributes.",
-    "Note about \`<body> element\` support for \`gmail.mobile-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+    "Note about `<body> element` support for `gmail.desktop-webmail`: Partial. Replaced by a `<div>` with supported attributes.",
+    "Note about `<body> element` support for `gmail.ios`: Partial. Replaced by a `<div>` with supported attributes.",
+    "Note about `<body> element` support for `gmail.android`: Partial. Replaced by a `<div>` with supported attributes.",
+    "Note about `<body> element` support for `gmail.mobile-webmail`: Partial. Replaced by a `<div>` with supported attributes.",
   ],
   "success": true,
 }
