@@ -10,7 +10,7 @@ import {
 	getEmailClientSupportStatus,
 } from '~/utils/email-clients.js';
 import { getAllFeatures, getCSSFeatures } from '~/utils/features.js';
-import { parseHtml } from '~/utils/html.js';
+import { parseHtml } from '~/utils/parse-html.js';
 import {
 	getMatchingAtRuleTitles,
 	getMatchingFunctionTitles,
