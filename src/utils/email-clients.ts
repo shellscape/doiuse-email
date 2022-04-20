@@ -1,23 +1,8 @@
-import type { EmailClient, EmailClientFamily } from '~/types/email-client.js';
+import micromatch from 'micromatch';
+
+import type { EmailClient } from '~/types/email-client.js';
 import type { IsSupported } from '~/types/features.js';
 import type { DoIUseEmailOptions } from '~/types/options.js';
-
-export const emailClientFamiliesList = [
-	'apple-mail',
-	'gmail',
-	'orange',
-	'outlook',
-	'yahoo',
-	'aol',
-	'samsung-email',
-	'sfr',
-	'thunderbird',
-	'protonmail',
-	'hey',
-	'mail-ru',
-	'fastmail',
-	'laposte',
-] as const;
 
 export const emailClientsList = [
 	'apple-mail.macos',
@@ -54,35 +39,15 @@ export const emailClientsList = [
 	'laposte.desktop-webmail',
 ] as const;
 
-const emailClientFamilyToClients = {} as Record<
-	EmailClientFamily,
-	EmailClient[]
->;
-
-for (const emailClient of emailClientsList) {
-	const family = emailClient.split('.')[0]! as EmailClientFamily;
-
-	emailClientFamilyToClients[family] ??= [];
-	emailClientFamilyToClients[family].push(emailClient);
-}
-
 export function getEmailClientsFromOptions(
 	options: DoIUseEmailOptions
 ): EmailClient[] {
-	const { emailClients: emailClientsOrFamilies } = options;
+	const { emailClients: emailClientGlobs } = options;
 
 	const emailClients = new Set<EmailClient>();
 
-	for (const emailClientOrFamily of emailClientsOrFamilies) {
-		if (emailClientOrFamily.includes('.')) {
-			emailClients.add(emailClientOrFamily as EmailClient);
-		} else {
-			const family = emailClientOrFamily.split('.')[0]! as EmailClientFamily;
-
-			for (const emailClient of emailClientFamilyToClients[family]) {
-				emailClients.add(emailClient);
-			}
-		}
+	for (const match of micromatch(emailClientsList, emailClientGlobs)) {
+		emailClients.add(match as EmailClient);
 	}
 
 	return [...emailClients];

@@ -1,4 +1,4 @@
-import type { Comment, Declaration, Rule, Stylesheet } from 'css';
+import type { Declaration, Rule, Stylesheet } from 'css';
 import { getProperty } from 'dot-prop';
 import type { Document, Element } from 'parse5/dist/tree-adapters/default';
 import styleToObject from 'style-to-object';
@@ -106,14 +106,13 @@ export class DoIUse {
 		this.notes.push(message);
 	}
 
-	checkCSSDeclarations(declarations: Array<Comment | Declaration>) {
+	checkCSSDeclarations(
+		declarations: Array<{ property: string; value: string }>
+	) {
 		const cssFeatures = getCSSFeatures();
 
 		for (const declaration of declarations) {
-			if (declaration.type === 'comment') continue;
-
-			const { property: propertyName, value: propertyValue } =
-				declaration as Declaration;
+			const { property: propertyName, value: propertyValue } = declaration;
 
 			// Check that the property name is supported
 			if (
@@ -165,7 +164,14 @@ export class DoIUse {
 		for (const stylesheetRule of stylesheet.stylesheet?.rules ?? []) {
 			if (stylesheetRule.type === 'rule') {
 				const rule = stylesheetRule as Rule;
-				this.checkCSSDeclarations(rule.declarations ?? []);
+				const declarations = (rule.declarations ?? [])
+					.filter((declaration) => declaration.type !== 'comment')
+					.map((declaration) => ({
+						property: (declaration as Declaration).property!,
+						value: (declaration as Declaration).value!,
+					}));
+
+				this.checkCSSDeclarations(declarations);
 				this.checkCSSSelectors(rule.selectors ?? []);
 			}
 
@@ -204,16 +210,12 @@ export class DoIUse {
 			if (styleAttr !== undefined) {
 				const styleObject = styleToObject(styleAttr.value);
 				if (styleObject !== null) {
-					const matchingAttributeTitles = getMatchingAttributeTitles({
-						attributes: Object.values(styleObject),
-					});
-					this.checkFeaturesSupport(matchingAttributeTitles);
-					const matchingElementAttributePairTitles =
-						getMatchingElementAttributePairTitles({
-							tagName: node.tagName,
-							attributes: styleObject,
-						});
-					this.checkFeaturesSupport(matchingElementAttributePairTitles);
+					this.checkCSSDeclarations(
+						Object.entries(styleObject).map(([property, value]) => ({
+							property,
+							value,
+						}))
+					);
 				}
 			}
 		}

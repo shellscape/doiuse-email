@@ -12,6 +12,31 @@ exports[`doIUseEmail() works > parses inline CSS 1`] = `
 }
 `;
 
+exports[`doIUseEmail() works > should fail on unsupported <style> features 1`] = `
+{
+  "errors": [
+    "filter is not supported by gmail.desktop-webmail",
+  ],
+  "notes": [
+    "Note about \`<style> element\` support for \`gmail.desktop-webmail\`: Partial. Not supported inside the \`<body>\`.",
+    "Note about \`<body> element\` support for \`gmail.desktop-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+  ],
+  "success": false,
+}
+`;
+
+exports[`doIUseEmail() works > should fail on unsupported inline-style features 1`] = `
+{
+  "errors": [
+    "flex-direction:column is not supported by gmail.desktop-webmail",
+  ],
+  "notes": [
+    "Note about \`<body> element\` support for \`gmail.desktop-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+  ],
+  "success": false,
+}
+`;
+
 exports[`doIUseEmail() works > works with blank email template 1`] = `
 {
   "notes": [

@@ -1,5 +1,6 @@
-import type { EmailClientOrFamily } from '~/types/email-client.js';
-
 export type DoIUseEmailOptions = {
-	emailClients: EmailClientOrFamily[];
+	/**
+		An array of globs to match email clients.
+	*/
+	emailClients: string[];
 };

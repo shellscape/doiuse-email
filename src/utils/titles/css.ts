@@ -165,7 +165,7 @@ export function getMatchingFunctionTitles({
 
 	// Match `<function>(` (e.g. `max(`, `calc(`)
 	const valueFunctionNames = new Set(
-		[...propertyValue.matchAll(/([a-z-]+)\(/)].map((match) => match[1]!)
+		[...propertyValue.matchAll(/([a-z-]+)\(/g)].map((match) => match[1]!)
 	);
 
 	for (const [functionName, functionTitle] of Object.entries(functionTitles)) {
