@@ -32,8 +32,10 @@ export function parseHtml(html: string): ParsedHtml {
 
 	const stylesheets: Stylesheet[] = [];
 	for (const styleNode of styleNodes) {
-		const styleTextNode = styleNode.childNodes[0] as Text;
-		stylesheets.push(css.parse(styleTextNode.data));
+		const styleTextNode = styleNode.childNodes[0] as Text | undefined;
+		if (styleTextNode !== undefined) {
+			stylesheets.push(css.parse(styleTextNode.data));
+		}
 	}
 
 	return {

@@ -160,4 +160,17 @@ describe('doIUseEmail() works', () => {
 		).toBe(true);
 		expect(doIUseEmail.getSupportedFeatures()).toMatchSnapshot();
 	});
+
+	test('works with empty styles', () => {
+		// iOS Gmail does not support local anchors: https://www.caniemail.com/features/html-anchor-links/
+		const code = outdent`
+			<style></style>
+			<div style=''></div>
+		`;
+		const result = doIUseEmail(code, {
+			emailClients: ['gmail.ios'],
+		});
+		expect(result.success).toEqual(true);
+		expect(result).toMatchSnapshot();
+	});
 });

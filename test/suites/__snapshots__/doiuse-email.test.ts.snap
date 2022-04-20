@@ -493,3 +493,11 @@ exports[`doIUseEmail() works > works with blank email template 1`] = `
   ],
 }
 `;
+
+exports[`doIUseEmail() works > works with empty styles 1`] = `
+{
+  "notes": [],
+  "success": true,
+  "warnings": [],
+}
+`;
