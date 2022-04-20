@@ -7,7 +7,7 @@
 		"paths": {
 			"~/*": ["./src/*"]
 		},
-		"types": ["./typings/data"]
+		"types": ["node", "./typings/data"]
 	},
 	"include": ["./src", "./typings"]
 }
