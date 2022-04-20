@@ -1,3 +1,6 @@
+import * as CSSWhat from 'css-what';
+import { SelectorType } from 'css-what';
+
 import { getCSSFeatures } from '~/utils/features.js';
 import { fromTitleEntries } from '~/utils/titles/utils.js';
 
@@ -179,40 +182,144 @@ export function getMatchingFunctionTitles({
 	return matchingFunctionNames;
 }
 
-const selectorsRegexMap = {
-	'Adjacent sibling combinator': /\+/, // a + b
-	'Attribute selector': /\[.*(.?=.*)?]/, // [attr^="value"]
-	'Chaining selectors': /(\.|#)[^.]+(\.|#)/, // .foo.bar
-	'Child combinator': />/, // a > b
-	'Class selector': /\./, // .className
-	'Descendant combinator': /\S\s\S/, // a b
-	'General sibling combinator': /~/, // img ~ p
-	'Grouping selectors': /(\.|#)\S+?,/, // .foo, bar
-	'ID selector': /#/, // #id
-	'Type selector': /(^|\s)\S+(\s|$)/, // p
-	'Universal selector *': /\*/, // *
+type SelectorDetector = (selectors: CSSWhat.Selector[][]) => boolean;
+
+const selectorDetectorsMap: Record<string, SelectorDetector> = {
+	'Adjacent sibling combinator'(selectors: CSSWhat.Selector[][]) {
+		for (const selector of selectors) {
+			if (selector.some((s) => s.type === SelectorType.Adjacent)) {
+				return true;
+			}
+		}
+
+		return false;
+	},
+	'Attribute selector'(selectors: CSSWhat.Selector[][]) {
+		for (const selector of selectors) {
+			if (
+				selector.some(
+					(s) =>
+						s.type === SelectorType.Attribute &&
+						s.name !== 'id' &&
+						s.name !== 'class'
+				)
+			) {
+				return true;
+			}
+		}
+
+		return false;
+	},
+	'Chaining selectors'(selectors: CSSWhat.Selector[][]) {
+		for (const selector of selectors) {
+			if (
+				selector.filter(
+					(s) => s.type === SelectorType.Attribute && s.name === 'class'
+				).length >= 2
+			) {
+				return true;
+			}
+		}
+
+		return false;
+	},
+	'Child combinator'(selectors: CSSWhat.Selector[][]) {
+		for (const selector of selectors) {
+			if (selector.some((s) => s.type === SelectorType.Child)) {
+				return true;
+			}
+		}
+
+		return false;
+	},
+	'Class selector'(selectors: CSSWhat.Selector[][]) {
+		for (const selector of selectors) {
+			if (
+				selector.some(
+					(s) => s.type === SelectorType.Attribute && s.name === 'class'
+				)
+			) {
+				return true;
+			}
+		}
+
+		return false;
+	},
+	'Descendant combinator'(selectors: CSSWhat.Selector[][]) {
+		for (const selector of selectors) {
+			if (selector.some((s) => s.type === SelectorType.Descendant)) {
+				return true;
+			}
+		}
+
+		return false;
+	},
+	'General sibling combinator'(selectors: CSSWhat.Selector[][]) {
+		for (const selector of selectors) {
+			if (selector.some((s) => s.type === SelectorType.Sibling)) {
+				return true;
+			}
+		}
+
+		return false;
+	},
+	'Grouping selectors'(selectors: CSSWhat.Selector[][]) {
+		return selectors.length >= 2;
+	},
+	'ID selector'(selectors: CSSWhat.Selector[][]) {
+		for (const selector of selectors) {
+			if (
+				selector.some(
+					(s) => s.type === SelectorType.Attribute && s.name === 'id'
+				)
+			) {
+				return true;
+			}
+		}
+
+		return false;
+	},
+	'Type selector'(selectors: CSSWhat.Selector[][]) {
+		for (const selector of selectors) {
+			if (selector.some((s) => s.type === SelectorType.Tag)) {
+				return true;
+			}
+		}
+
+		return false;
+	},
+	'Universal selector *'(selectors: CSSWhat.Selector[][]) {
+		for (const selector of selectors) {
+			if (selector.some((s) => s.type === SelectorType.Universal)) {
+				return true;
+			}
+		}
+
+		return false;
+	},
 };
 
-export const selectorTitles = fromTitleEntries<RegExp>(
+export const selectorTitles = fromTitleEntries<SelectorDetector>(
 	Object.keys(getCSSFeatures()).map((title) => {
-		if (
-			selectorsRegexMap[title as keyof typeof selectorsRegexMap] === undefined
-		) {
+		if (selectorDetectorsMap[title] === undefined) {
 			return;
 		}
 
 		return {
 			title,
-			value: selectorsRegexMap[title as keyof typeof selectorsRegexMap]!,
+			value: selectorDetectorsMap[title]!,
 		};
 	})
 );
 
 export function getMatchingSelectorTitles({ selector }: { selector: string }) {
 	const matchingSelectorTitles: string[] = [];
+	const parsedSelectors = CSSWhat.parse(selector);
 
-	for (const [selectorTitle, selectorRegex] of Object.entries(selectorTitles)) {
-		if (selectorRegex.test(selector)) {
+	for (const [selectorTitle, selectorTester] of Object.entries(
+		selectorTitles
+	)) {
+		if (selectorTester(parsedSelectors)) {
 			matchingSelectorTitles.push(selectorTitle);
 		}
 	}

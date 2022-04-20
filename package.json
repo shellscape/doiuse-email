@@ -31,6 +31,7 @@
 	"dependencies": {
 		"commander": "^9.2.0",
 		"css": "^3.0.0",
+		"css-what": "^6.1.0",
 		"dot-prop": "^7.2.0",
 		"micromatch": "^4.0.5",
 		"onetime": "^6.0.0",

@@ -42,7 +42,7 @@ const atRules = new Set([
 	'supports',
 ]);
 
-export class DoIUse {
+export class DoIUseEmail {
 	emailClients: EmailClient[];
 	options: DoIUseEmailOptions;
 	errors: string[] = [];
@@ -263,5 +263,5 @@ export class DoIUse {
 }
 
 export function doIUseEmail(code: string, options: DoIUseEmailOptions) {
-	return new DoIUse(options).check(code);
+	return new DoIUseEmail(options).check(code);
 }
