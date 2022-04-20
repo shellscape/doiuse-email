@@ -6,12 +6,14 @@ import parse5 from 'parse5';
 export function findStyleNodes(node: ChildNode): Element[] {
 	if (node.nodeName === '#text') return [];
 	if (node.nodeName === '#comment') return [];
-
 	if (node.nodeName === 'style') return [node];
 
 	const styleNodes: Element[] = [];
-	for (const childNode of (node as Element).childNodes) {
-		styleNodes.push(...findStyleNodes(childNode));
+
+	if ('childNodes' in node) {
+		for (const childNode of node.childNodes) {
+			styleNodes.push(...findStyleNodes(childNode));
+		}
 	}
 
 	return styleNodes;

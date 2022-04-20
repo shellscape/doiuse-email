@@ -75,6 +75,8 @@ export function getEmailClientsFromOptions(
 
 	for (const emailClientOrFamily of emailClientsOrFamilies) {
 		if (emailClientOrFamily.includes('.')) {
+			emailClients.add(emailClientOrFamily as EmailClient);
+		} else {
 			const family = emailClientOrFamily.split('.')[0]! as EmailClientFamily;
 
 			for (const emailClient of emailClientFamilyToClients[family]) {
@@ -86,6 +88,40 @@ export function getEmailClientsFromOptions(
 	return [...emailClients];
 }
 
-export function isEmailClientSupported(stats: Record<string, IsSupported>) {
-	return Object.values(stats).includes('y');
+type EmailClientSupportStatus =
+	| { type: 'full' }
+	| { type: 'partial'; noteNumbers: number[] }
+	| { type: 'none' };
+
+export function getEmailClientSupportStatus(
+	// Map from email client versions to support status
+	emailClientStats: Record<string, IsSupported>
+): EmailClientSupportStatus {
+	const statKeys = Object.keys(emailClientStats).sort((k1, k2) => {
+		if (k1 < k2) {
+			return -1;
+		} else if (k1 > k2) {
+			return 1;
+		} else {
+			return 0;
+		}
+	});
+
+	// TODO: option to specify specific version, right now, it defaults to latest
+	const latestEmailClient = statKeys[statKeys.length - 1];
+
+	const supportStatus = emailClientStats[latestEmailClient!]!;
+
+	if (supportStatus === 'y') {
+		return { type: 'full' };
+	} else if (supportStatus === 'n') {
+		return { type: 'none' };
+	} else {
+		return {
+			type: 'partial',
+			noteNumbers: [...supportStatus.matchAll(/#(\d+)/g)]
+				.map((matches) => matches[1]!)
+				.map((noteNumber) => Number(noteNumber)),
+		};
+	}
 }

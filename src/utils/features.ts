@@ -1,26 +1,36 @@
 import onetime from 'onetime';
 
-import type { FeatureStats } from '~/types/features.js';
+import type { FeatureData } from '~/types/features.js';
 import canIEmailData from '~data/can-i-email.json';
 
-export const getCSSFeatures = onetime((): Record<string, FeatureStats> => {
-	const cssFeatures: Record<string, FeatureStats> = {};
+export const getCSSFeatures = onetime((): Record<string, FeatureData> => {
+	const cssFeatures: Record<string, FeatureData> = {};
 
-	for (const { title, stats, category } of canIEmailData.data) {
-		if (category !== 'css') continue;
-		cssFeatures[title] = stats;
+	for (const data of canIEmailData.data) {
+		if (data.category !== 'css') continue;
+		cssFeatures[data.title] = data;
 	}
 
 	return cssFeatures;
 });
 
-export const getHTMLFeatures = onetime((): Record<string, FeatureStats> => {
-	const htmlFeatures: Record<string, FeatureStats> = {};
+export const getHTMLFeatures = onetime((): Record<string, FeatureData> => {
+	const htmlFeatures: Record<string, FeatureData> = {};
 
-	for (const { title, stats, category } of canIEmailData.data) {
-		if (category !== 'html') continue;
-		htmlFeatures[title] = stats;
+	for (const data of canIEmailData.data) {
+		if (data.category !== 'html') continue;
+		htmlFeatures[data.title] = data;
 	}
 
 	return htmlFeatures;
+});
+
+export const getAllFeatures = onetime((): Record<string, FeatureData> => {
+	const allFeatures: Record<string, FeatureData> = {};
+
+	for (const data of canIEmailData.data) {
+		allFeatures[data.title] = data;
+	}
+
+	return allFeatures;
 });
