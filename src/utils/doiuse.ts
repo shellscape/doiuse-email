@@ -296,7 +296,7 @@ export class DoIUseEmail {
 				link: featureData.url,
 				notes: undefined,
 			};
-			let isFeatureSupported = false;
+			let isFeatureSupported = true;
 
 			for (const emailClient of this.emailClients) {
 				const { stats } = featureData;
@@ -306,8 +306,9 @@ export class DoIUseEmail {
 
 				const supportStatus = getEmailClientSupportStatus(supportMap);
 
-				if (supportStatus.type === 'full' || supportStatus.type === 'partial') {
-					isFeatureSupported = true;
+				if (supportStatus.type === 'none') {
+					isFeatureSupported = false;
+					break;
 				}
 
 				if (supportStatus.type === 'partial') {

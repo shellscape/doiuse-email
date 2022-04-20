@@ -1,7 +1,7 @@
 import { outdent } from 'outdent';
 import { describe, expect, test } from 'vitest';
 
-import { doIUseEmail } from '~/index.js';
+import { DoIUseEmail, doIUseEmail } from '~/index.js';
 
 describe('doIUseEmail() works', () => {
 	test('works with blank email template', () => {
@@ -115,5 +115,10 @@ describe('doIUseEmail() works', () => {
 		});
 		expect(result.success).toEqual(false);
 		expect(result).toMatchSnapshot();
+	});
+
+	test('getSupportedFeatures()', () => {
+		const doIUseEmail = new DoIUseEmail({ emailClients: ['*'] });
+		expect(doIUseEmail.getSupportedFeatures()).toMatchSnapshot();
 	});
 });
