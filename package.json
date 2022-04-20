@@ -16,6 +16,7 @@
 	"type": "module",
 	"exports": "./src/index.ts",
 	"scripts": {
+		"release": "lionp",
 		"prepare": "lion-git-hooks",
 		"build": "node-ts ./scripts/build.ts",
 		"start": "node-ts ./src/index.ts",
@@ -45,5 +46,8 @@
 	},
 	"peerDependencies": {
 		"postcss": "^8"
+	},
+	"publishConfig": {
+		"directory": "dist"
 	}
 }
