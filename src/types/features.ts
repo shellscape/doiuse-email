@@ -1,4 +1,4 @@
-export type IsSupported = 'y' | 'n' | string;
+export type IsSupported = string;
 
 export type FeatureStats = {
 	'apple-mail': {

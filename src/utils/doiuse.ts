@@ -45,6 +45,7 @@ const atRules = new Set([
 export class DoIUseEmail {
 	emailClients: EmailClient[];
 	options: DoIUseEmailOptions;
+	warnings: string[] = [];
 	errors: string[] = [];
 	notes: string[] = [];
 
@@ -86,13 +87,17 @@ export class DoIUseEmail {
 				if (supportStatus.type === 'none') {
 					this.error(`${featureTitle} is not supported by ${emailClient}`);
 				} else if (supportStatus.type === 'partial') {
-					for (const noteNumber of supportStatus.noteNumbers) {
-						this.note(
-							`Note about \`${featureTitle}\` support for \`${emailClient}\`: ${feature.notes_by_num![
-								String(noteNumber)
-							]!}`
-						);
-					}
+					this.warning(
+						`${featureTitle} is only partially supported by ${emailClient}`
+					);
+				}
+
+				for (const noteNumber of supportStatus.noteNumbers ?? []) {
+					this.note(
+						`Note about \`${featureTitle}\` support for \`${emailClient}\`: ${feature.notes_by_num![
+							String(noteNumber)
+						]!}`
+					);
 				}
 			}
 		}
@@ -100,6 +105,10 @@ export class DoIUseEmail {
 
 	error(message: string) {
 		this.errors.push(message);
+	}
+
+	warning(message: string) {
+		this.warnings.push(message);
 	}
 
 	note(message: string) {
@@ -241,9 +250,10 @@ export class DoIUseEmail {
 
 	check(
 		code: string
-	):
-		| { success: true; notes: string[] }
-		| { success: false; errors: string[]; notes: string[] } {
+	): { notes: string[]; warnings: string[] } & (
+		| { success: true }
+		| { success: false; errors: string[] }
+	) {
 		const { document, stylesheets } = parseHtml(code);
 
 		// Check the CSS
@@ -255,9 +265,18 @@ export class DoIUseEmail {
 		this.checkHtml(document);
 
 		if (this.errors.length === 0) {
-			return { success: true, notes: this.notes };
+			return {
+				success: true,
+				notes: this.notes,
+				warnings: this.warnings,
+			};
 		} else {
-			return { success: false, errors: this.errors, notes: this.notes };
+			return {
+				success: false,
+				errors: this.errors,
+				notes: this.notes,
+				warnings: this.warnings,
+			};
 		}
 	}
 }

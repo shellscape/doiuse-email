@@ -53,10 +53,10 @@ export function getEmailClientsFromOptions(
 	return [...emailClients];
 }
 
-type EmailClientSupportStatus =
-	| { type: 'full' }
-	| { type: 'partial'; noteNumbers: number[] }
-	| { type: 'none' };
+type EmailClientSupportStatus = {
+	type: 'full' | 'partial' | 'none';
+	noteNumbers: number[] | undefined;
+};
 
 export function getEmailClientSupportStatus(
 	// Map from email client versions to support status
@@ -77,16 +77,21 @@ export function getEmailClientSupportStatus(
 
 	const supportStatus = emailClientStats[latestEmailClient!]!;
 
-	if (supportStatus === 'y') {
-		return { type: 'full' };
-	} else if (supportStatus === 'n') {
-		return { type: 'none' };
+	let noteNumbers: number[] | undefined = [...supportStatus.matchAll(/#(\d+)/g)]
+		.map((matches) => matches[1]!)
+		.map((noteNumber) => Number(noteNumber));
+	if (noteNumbers.length === 0) {
+		noteNumbers = undefined;
+	}
+
+	if (supportStatus.startsWith('y')) {
+		return { type: 'full', noteNumbers };
+	} else if (supportStatus.startsWith('n')) {
+		return { type: 'none', noteNumbers };
 	} else {
 		return {
 			type: 'partial',
-			noteNumbers: [...supportStatus.matchAll(/#(\d+)/g)]
-				.map((matches) => matches[1]!)
-				.map((noteNumber) => Number(noteNumber)),
+			noteNumbers,
 		};
 	}
 }

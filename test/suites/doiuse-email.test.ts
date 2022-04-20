@@ -71,4 +71,49 @@ describe('doIUseEmail() works', () => {
 		expect(result.success).toEqual(false);
 		expect(result).toMatchSnapshot();
 	});
+
+	test('should work with selectors', () => {
+		// Desktop webmail supports most selectors
+		const code = outdent`
+			<!doctype html>
+			<html>
+				<head>
+					<style>
+						div > a#linkId[href="https://google.com"].link {}
+						* { box-sizing: border-box }
+					</style>
+				</head>
+				<body>
+					<div>
+						<a id='linkId' class='link' href='https://google.com'></div>
+					</div>
+				</body>
+			</html>
+		`;
+		const result = doIUseEmail(code, {
+			emailClients: ['gmail.desktop-webmail'],
+		});
+		expect(result.success).toEqual(true);
+		expect(result).toMatchSnapshot();
+	});
+
+	test('should fail with unsupported element-attribute pairs', () => {
+		// iOS Gmail does not support local anchors: https://www.caniemail.com/features/html-anchor-links/
+		const code = outdent`
+			<!doctype html>
+			<html>
+				<body>
+					<div>
+						<div id='header'>Header</div>
+						<a href='#header'></div>
+					</div>
+				</body>
+			</html>
+		`;
+		const result = doIUseEmail(code, {
+			emailClients: ['gmail.ios'],
+		});
+		expect(result.success).toEqual(false);
+		expect(result).toMatchSnapshot();
+	});
 });

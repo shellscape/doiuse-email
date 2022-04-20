@@ -9,6 +9,12 @@ exports[`doIUseEmail() works > parses inline CSS 1`] = `
     "Note about \`<body> element\` support for \`gmail.mobile-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
   ],
   "success": true,
+  "warnings": [
+    "<body> element is only partially supported by gmail.desktop-webmail",
+    "<body> element is only partially supported by gmail.ios",
+    "<body> element is only partially supported by gmail.android",
+    "<body> element is only partially supported by gmail.mobile-webmail",
+  ],
 }
 `;
 
@@ -22,6 +28,10 @@ exports[`doIUseEmail() works > should fail on unsupported <style> features 1`] =
     "Note about \`<body> element\` support for \`gmail.desktop-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
   ],
   "success": false,
+  "warnings": [
+    "<style> element is only partially supported by gmail.desktop-webmail",
+    "<body> element is only partially supported by gmail.desktop-webmail",
+  ],
 }
 `;
 
@@ -34,6 +44,43 @@ exports[`doIUseEmail() works > should fail on unsupported inline-style features 
     "Note about \`<body> element\` support for \`gmail.desktop-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
   ],
   "success": false,
+  "warnings": [
+    "<body> element is only partially supported by gmail.desktop-webmail",
+  ],
+}
+`;
+
+exports[`doIUseEmail() works > should fail with unsupported element-attribute pairs 1`] = `
+{
+  "errors": [
+    "Local anchors is not supported by gmail.ios",
+    "Local anchors is not supported by gmail.ios",
+  ],
+  "notes": [
+    "Note about \`<body> element\` support for \`gmail.ios\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+    "Note about \`Local anchors\` support for \`gmail.ios\`: Buggy. Clicking an anchor link does nothing.",
+    "Note about \`Local anchors\` support for \`gmail.ios\`: Buggy. Clicking an anchor link does nothing.",
+  ],
+  "success": false,
+  "warnings": [
+    "<body> element is only partially supported by gmail.ios",
+  ],
+}
+`;
+
+exports[`doIUseEmail() works > should work with selectors 1`] = `
+{
+  "notes": [
+    "Note about \`Attribute selector\` support for \`gmail.desktop-webmail\`: Partial. Only supports \`[attr~=value]\` syntax.",
+    "Note about \`<style> element\` support for \`gmail.desktop-webmail\`: Partial. Not supported inside the \`<body>\`.",
+    "Note about \`<body> element\` support for \`gmail.desktop-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+  ],
+  "success": true,
+  "warnings": [
+    "Attribute selector is only partially supported by gmail.desktop-webmail",
+    "<style> element is only partially supported by gmail.desktop-webmail",
+    "<body> element is only partially supported by gmail.desktop-webmail",
+  ],
 }
 `;
 
@@ -46,5 +93,11 @@ exports[`doIUseEmail() works > works with blank email template 1`] = `
     "Note about \`<body> element\` support for \`gmail.mobile-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
   ],
   "success": true,
+  "warnings": [
+    "<body> element is only partially supported by gmail.desktop-webmail",
+    "<body> element is only partially supported by gmail.ios",
+    "<body> element is only partially supported by gmail.android",
+    "<body> element is only partially supported by gmail.mobile-webmail",
+  ],
 }
 `;
