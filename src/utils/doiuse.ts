@@ -279,6 +279,57 @@ export class DoIUseEmail {
 			};
 		}
 	}
+
+	getSupportedFeatures() {
+		type Feature = {
+			name: string;
+			link: string;
+			notes?: string[];
+		};
+
+		const features = getAllFeatures();
+		const supportedFeatures: Feature[] = [];
+
+		for (const [featureTitle, featureData] of Object.entries(features)) {
+			const currentFeature: Feature = {
+				name: featureTitle,
+				link: featureData.url,
+				notes: undefined,
+			};
+			let isFeatureSupported = false;
+
+			for (const emailClient of this.emailClients) {
+				const { stats } = featureData;
+				const supportMap = getProperty(stats, emailClient);
+
+				if (supportMap === undefined) continue;
+
+				const supportStatus = getEmailClientSupportStatus(supportMap);
+
+				if (supportStatus.type === 'full' || supportStatus.type === 'partial') {
+					isFeatureSupported = true;
+				}
+
+				if (supportStatus.type === 'partial') {
+					currentFeature.notes ??= [];
+
+					for (const noteNumber of supportStatus.noteNumbers ?? []) {
+						currentFeature.notes.push(
+							`Note about \`${featureTitle}\` support for \`${emailClient}\`: ${featureData.notes_by_num![
+								String(noteNumber)
+							]!}`
+						);
+					}
+				}
+			}
+
+			if (isFeatureSupported) {
+				supportedFeatures.push(currentFeature);
+			}
+		}
+
+		return supportedFeatures;
+	}
 }
 
 export function doIUseEmail(code: string, options: DoIUseEmailOptions) {
