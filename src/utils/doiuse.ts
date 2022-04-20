@@ -41,6 +41,7 @@ const atRules = new Set([
 export class DoIUse {
 	emailClients: EmailClient[];
 	options: DoIUseEmailOptions;
+	errors: string[];
 
 	constructor(options: DoIUseEmailOptions) {
 		this.emailClients = getEmailClientsFromOptions(options);
@@ -69,6 +70,7 @@ export class DoIUse {
 	}
 
 	error(message: string) {
+		this.errors.push(message);
 		console.error(message);
 	}
 
@@ -181,7 +183,9 @@ export class DoIUse {
 		}
 	}
 
-	check(code: string) {
+	check(
+		code: string
+	): { success: true } | { success: false; errors: string[] } {
 		const { document, stylesheets } = parseHtml(code);
 
 		// Check the CSS
@@ -191,5 +195,15 @@ export class DoIUse {
 
 		// Check the HTML
 		this.checkHtml(document);
+
+		if (this.errors.length === 0) {
+			return { success: true };
+		} else {
+			return { success: false, errors: this.errors };
+		}
 	}
+}
+
+export function doIUseEmail(options: DoIUseEmailOptions, code: string) {
+	return new DoIUse(options).check(code);
 }
