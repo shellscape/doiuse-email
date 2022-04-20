@@ -173,4 +173,19 @@ describe('doIUseEmail() works', () => {
 		expect(result.success).toEqual(true);
 		expect(result).toMatchSnapshot();
 	});
+
+	test('fails with unsupported class selectors', () => {
+		// iOS webmail does not support class selectors: https://www.caniemail.com/features/html-anchor-links/
+		const code = outdent`
+			<style>
+				.a {}
+			</style>
+			<div class='a'></div>
+		`;
+		const result = doIUseEmail(code, {
+			emailClients: ['gmail.mobile-webmail'],
+		});
+		expect(result.success).toEqual(false);
+		expect(result).toMatchSnapshot();
+	});
 });

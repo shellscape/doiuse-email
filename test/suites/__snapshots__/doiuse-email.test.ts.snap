@@ -1,5 +1,16 @@
 // Vitest Snapshot v1
 
+exports[`doIUseEmail() works > fails with unsupported class selectors 1`] = `
+{
+  "errors": [
+    "\`Class selector\` is not supported by \`gmail.mobile-webmail\`",
+  ],
+  "notes": [],
+  "success": false,
+  "warnings": [],
+}
+`;
+
 exports[`doIUseEmail() works > getSupportedFeatures() 1`] = `
 [
   {
