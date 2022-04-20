@@ -14,7 +14,9 @@ Install the package from npm using your favourite package manager:
 npm install doiuse-email
 ```
 
-Then, import it and run it by calling `doIUseEmail(html: string, options: DoIUseOptions)`:
+## Programmatic Usage
+
+Import it and run it by calling `doIUseEmail(html: string, options: DoIUseOptions)`:
 
 ```typescript
 import { doIUseEmail } from 'doiuse-email';
@@ -45,6 +47,20 @@ console.log(result);
 */
 
 // Output is based on https://caniemail.com
+```
+
+## CLI Usage
+
+You can also call `doiuse-email` from the CLI:
+
+```shell
+doiuse-email --email-clients='gmail.*' myfile.html
+```
+
+The command will output a JSON representing the support for the HTML in the provided file. It's recommended to use it with a tool like [jq](https://github.com/stedolan/jq) for more human-readable output:
+
+```shell
+doiuse-email --email-clients='gmail.*' myfile.html | jq
 ```
 
 ## API
