@@ -9,7 +9,7 @@ import {
 	psuedoSelectorTitles,
 	selectorTitles,
 	unitTitles,
-} from '~/utils/titles.js';
+} from '~/utils/titles/css.js';
 import caniemail from '~data/can-i-email.json';
 
 const allCSSTitles = caniemail.data

@@ -5,15 +5,17 @@ import type { Document } from 'parse5';
 import type { EmailClient } from '~/types/email-client.js';
 import type { DoIUseEmailOptions } from '~/types/options.js';
 import { getEmailClientsFromOptions } from '~/utils/email-clients.js';
-import { getCSSFeatures, getHTMLFeatures } from '~/utils/features.js';
+import { getCSSFeatures, getHTMLFeatures } from '~/utils/css-features.jss.js';
 import { parseHtml } from '~/utils/html.js';
 import {
 	getMatchingFunctionTitles,
+	getMatchingKeywordTitles,
 	getMatchingPropertyTitles,
 	getMatchingPropertyValuePairTitles,
-	getMatchingPsuedoSelectorTitles,
+	getMatchingPseudoSelectorTitles,
+	getMatchingSelectorTitles,
 	getMatchingUnitTitles,
-} from '~/utils/titles.js';
+} from '~/utils/titles/css.js';
 
 export class DoIUse {
 	emailClients: EmailClient[];
@@ -73,6 +75,8 @@ export class DoIUse {
 				this.checkFeaturesSupport(matchingFunctionTitles);
 				const matchingUnitTitles = getMatchingUnitTitles(propertyValue);
 				this.checkFeaturesSupport(matchingUnitTitles);
+				const matchingKeywordTitles = getMatchingKeywordTitles(propertyValue);
+				this.checkFeaturesSupport(matchingKeywordTitles);
 			}
 
 			// Check that the property name + value pair is supported
@@ -86,9 +90,11 @@ export class DoIUse {
 
 	checkCSSSelectors(selectors: string[]) {
 		for (const selector of selectors) {
-			const matchingPsuedoSelectorTitles =
-				getMatchingPsuedoSelectorTitles(selector);
-			this.checkFeaturesSupport(matchingPsuedoSelectorTitles);
+			const matchingPseudoSelectorTitles =
+				getMatchingPseudoSelectorTitles(selector);
+			this.checkFeaturesSupport(matchingPseudoSelectorTitles);
+			const matchingSelectorTitles = getMatchingSelectorTitles(selector);
+			this.checkFeaturesSupport(matchingSelectorTitles);
 		}
 	}
 

@@ -1,16 +1,7 @@
 import { getCSSFeatures } from '~/utils/features.js';
+import { fromTitleEntries } from '~/utils/titles/utils.js';
 
 const propertyNameRegex = /^[a-z-]+$/;
-
-function fromTitleEntries<T>(
-	entries: Array<{ title: string; value: T } | undefined>
-): Record<string, T> {
-	return Object.fromEntries(
-		entries
-			.filter((entry) => entry !== undefined)
-			.map((entry) => [entry!.title, entry!.value])
-	);
-}
 
 // Map of property titles to the properties they support
 export const propertyTitles = fromTitleEntries<string[]>(
