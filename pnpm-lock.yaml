@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@leonzalion/configs': ^1.2.20
+  '@leonzalion/configs': ^1.2.21
   '@types/css': ^0.0.33
   '@types/node': ^17.0.25
   commander: ^9.2.0
@@ -28,7 +28,7 @@ dependencies:
   style-to-object: 0.3.0
 
 devDependencies:
-  '@leonzalion/configs': 1.2.20_typescript@4.6.3
+  '@leonzalion/configs': 1.2.21_typescript@4.6.3
   '@types/css': 0.0.33
   '@types/node': 17.0.25
   desm: 1.2.0
@@ -266,8 +266,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@leonzalion/configs/1.2.20_typescript@4.6.3:
-    resolution: {integrity: sha512-vrksxqBWQp0iKw673nJ5Xo9OPmqRFMVdge8qQpuQAgKDFq0C9+qmqiIIEKhmAPl3ZU1uQRDCx09AL5PAKvIaPw==}
+  /@leonzalion/configs/1.2.21_typescript@4.6.3:
+    resolution: {integrity: sha512-Ii+rme2M0q/ao20RVyS/9+XlyY4SWpJBajY1cGqJ8BBAkih+VhogjBn8rhmctHgEkB6UZM9DgR8mrGIIkP/vIw==}
     hasBin: true
     dependencies:
       '@commitlint/cli': 16.2.3_@swc+core@1.2.170

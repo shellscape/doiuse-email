@@ -2,12 +2,11 @@
 	"extends": "@leonzalion/configs/tsconfig.json",
 	"compilerOptions": {
 		"outDir": "dist",
-		"resolveJsonModule": true,
 		"baseUrl": ".",
 		"paths": {
-			"~/*": ["./src/*"]
+			"~/*": ["./src/*"],
 		},
-		"types": ["node", "./typings/data"]
+		"types": ["node"]
 	},
 	"include": ["./src", "./typings"]
 }

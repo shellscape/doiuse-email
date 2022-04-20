@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
 
+import caniemail from '~/data/can-i-email.cjs';
 import {
 	attributeTitles,
 	elementAttributePairTitles,
 	elementTitles,
 } from '~/utils/titles/html.js';
-import caniemail from '~data/can-i-email.json';
 
 const allHTMLTitles = caniemail.data
 	.filter((d) => d.category === 'html')

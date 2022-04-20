@@ -2,6 +2,7 @@
 	"extends": "./tsconfig.json",
 	"include": [
 		"src",
+		"data",
 		"test",
 		"typings",
 		"scripts",

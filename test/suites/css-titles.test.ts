@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
+import canIEmailData from '~/data/can-i-email.cjs';
 import {
 	atRuleTitles,
 	functionTitles,
@@ -10,9 +11,8 @@ import {
 	selectorTitles,
 	unitTitles,
 } from '~/utils/titles/css.js';
-import caniemail from '~data/can-i-email.json';
 
-const allCSSTitles = caniemail.data
+const allCSSTitles = canIEmailData.data
 	.filter((d) => d.category === 'css')
 	.map((d) => d.title);
 

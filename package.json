@@ -22,7 +22,7 @@
 		"release": "lionp",
 		"prepare": "lion-git-hooks",
 		"build": "node-ts ./scripts/build.ts",
-		"start": "node-ts ./src/index.ts",
+		"start": "node-ts ./src/bin/cli.ts",
 		"test": "vitest run",
 		"lint": "eslint --cache --fix .",
 		"prettier": "prettier --write .",
@@ -37,7 +37,7 @@
 		"style-to-object": "^0.3.0"
 	},
 	"devDependencies": {
-		"@leonzalion/configs": "^1.2.20",
+		"@leonzalion/configs": "^1.2.21",
 		"@types/css": "^0.0.33",
 		"@types/node": "^17.0.25",
 		"desm": "^1.2.0",
