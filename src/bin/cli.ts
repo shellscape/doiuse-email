@@ -1,4 +1,5 @@
 import { program } from 'commander';
+import * as fs from 'node:fs';
 import process from 'node:process';
 
 import type { EmailClient } from '~/types/email-client.js';
@@ -17,7 +18,6 @@ program
 const opts = program.opts<{ emailClients: string }>();
 
 const emailClients = opts.emailClients.split(',') as EmailClient[];
+const htmlCode = fs.readFileSync(program.args[0]!, 'utf8');
 
-process.stdout.write(
-	JSON.stringify(doIUseEmail(program.args[0]!, { emailClients }))
-);
+process.stdout.write(JSON.stringify(doIUseEmail(htmlCode, { emailClients })));
