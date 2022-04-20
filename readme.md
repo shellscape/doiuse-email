@@ -79,7 +79,7 @@ The HTML that represents the email.
 
 Type: `string[]`
 
-An array of globs for matching email clients to be checked against the Can I Email database.
+An array of globs for matching email clients to be checked against the Can I Email database. For more information about the glob syntax that is used, refer to the [micromatch](https://www.npmjs.com/package/micromatch) package.
 
 Possible email clients:
 
