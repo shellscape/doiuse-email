@@ -235,7 +235,7 @@ export class DoIUseEmail {
 		if ('childNodes' in node) {
 			for (const childNode of node.childNodes) {
 				if (childNode.type === ElementType.Tag) {
-					this.checkHtmlNode(childNode);
+					this.checkHtmlNode(childNode as Element);
 				}
 			}
 		}
@@ -244,7 +244,7 @@ export class DoIUseEmail {
 	checkHtml(document: Document) {
 		for (const childNode of document.childNodes) {
 			if (childNode.type === ElementType.Tag) {
-				this.checkHtmlNode(childNode);
+				this.checkHtmlNode(childNode as Element);
 			}
 		}
 	}
