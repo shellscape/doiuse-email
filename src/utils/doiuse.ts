@@ -85,10 +85,12 @@ export class DoIUseEmail {
 
 				const supportStatus = getEmailClientSupportStatus(supportMap);
 				if (supportStatus.type === 'none') {
-					this.error(`${featureTitle} is not supported by ${emailClient}`);
+					this.error(
+						`\`${featureTitle}\` is not supported by \`${emailClient}\``
+					);
 				} else if (supportStatus.type === 'partial') {
 					this.warning(
-						`${featureTitle} is only partially supported by ${emailClient}`
+						`\`${featureTitle}\` is only partially supported by \`${emailClient}\``
 					);
 				}
 
