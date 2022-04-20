@@ -12,8 +12,22 @@ describe('doIUseEmail() works', () => {
 				</body>
 			</html>
 		`;
-		expect(doIUseEmail(code, { emailClients: ['gmail'] }).success).toEqual(
-			true
-		);
+		const result = doIUseEmail(code, { emailClients: ['gmail'] });
+		expect(result.success).toEqual(true);
+		expect(result).toMatchSnapshot();
+	});
+
+	test('parses inline CSS', () => {
+		const code = outdent`
+			<!doctype html>
+			<html>
+				<body>
+					<div style='background-color: orange'></div>
+				</body>
+			</html>
+		`;
+		const result = doIUseEmail(code, { emailClients: ['gmail'] });
+		expect(result.success).toEqual(true);
+		expect(result).toMatchSnapshot();
 	});
 });

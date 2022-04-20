@@ -1,6 +1,7 @@
 import type { Comment, Declaration, Rule, Stylesheet } from 'css';
 import { getProperty } from 'dot-prop';
 import type { Document, Element } from 'parse5';
+import styleToObject from 'style-to-object';
 
 import type { EmailClient } from '~/types/email-client.js';
 import type { DoIUseEmailOptions } from '~/types/options.js';
@@ -197,6 +198,24 @@ export class DoIUse {
 					),
 				});
 			this.checkFeaturesSupport(matchingElementAttributePairTitles);
+
+			// Check inline styles
+			const styleAttr = node.attrs.find((attr) => attr.name === 'style');
+			if (styleAttr !== undefined) {
+				const styleObject = styleToObject(styleAttr.value);
+				if (styleObject !== null) {
+					const matchingAttributeTitles = getMatchingAttributeTitles({
+						attributes: Object.values(styleObject),
+					});
+					this.checkFeaturesSupport(matchingAttributeTitles);
+					const matchingElementAttributePairTitles =
+						getMatchingElementAttributePairTitles({
+							tagName: node.tagName,
+							attributes: styleObject,
+						});
+					this.checkFeaturesSupport(matchingElementAttributePairTitles);
+				}
+			}
 		}
 
 		if ('childNodes' in node) {

@@ -29,7 +29,8 @@
 		"css": "^3.0.0",
 		"dot-prop": "^7.2.0",
 		"onetime": "^6.0.0",
-		"parse5": "^6.0.1"
+		"parse5": "^6.0.1",
+		"style-to-object": "^0.3.0"
 	},
 	"devDependencies": {
 		"@leonzalion/configs": "^1.2.20",
