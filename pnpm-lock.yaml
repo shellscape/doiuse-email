@@ -1,5 +1,8 @@
 lockfileVersion: 5.3
 
+overrides:
+  domhandler: ^4
+
 specifiers:
   '@leonzalion/configs': ^1.2.21
   '@types/css': ^0.0.33
@@ -9,7 +12,7 @@ specifiers:
   css: ^3.0.0
   css-what: ^6.1.0
   desm: ^1.2.0
-  domhandler: ^4.3.1
+  domhandler: ^4
   dot-prop: ^7.2.0
   eslint-define-config: ^1.3.0
   execa: ^6.1.0
