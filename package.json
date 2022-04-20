@@ -1,6 +1,6 @@
 {
 	"name": "doiuse-email",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"description": "Lint CSS for email support against caniemail database.",
 	"license": "MIT",
 	"repository": {
