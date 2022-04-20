@@ -7,7 +7,7 @@ import { doIUseEmail } from '~/utils/doiuse.js';
 program
 	.name('doiuse-email')
 	.showHelpAfterError()
-	.option(
+	.requiredOption(
 		'-e, --email-clients <email-clients>',
 		'a comma separated list of email clients to check support against'
 	)
