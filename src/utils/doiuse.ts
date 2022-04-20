@@ -1,6 +1,7 @@
 import type { Declaration, Rule, Stylesheet } from 'css';
+import type { Document, Element } from 'domhandler';
 import { getProperty } from 'dot-prop';
-import type { Document, Element } from 'parse5/dist/tree-adapters/default';
+import { ElementType } from 'htmlparser2';
 import styleToObject from 'style-to-object';
 
 import type { EmailClient } from '~/types/email-client.js';
@@ -202,22 +203,22 @@ export class DoIUseEmail {
 			tagName: node.tagName,
 		});
 		this.checkFeaturesSupport(matchingElementTitles);
-		if (node.attrs !== undefined) {
+		if (node.attributes !== undefined) {
 			const matchingAttributeTitles = getMatchingAttributeTitles({
-				attributes: node.attrs.map((attr) => attr.name),
+				attributes: node.attributes.map((attr) => attr.name),
 			});
 			this.checkFeaturesSupport(matchingAttributeTitles);
 			const matchingElementAttributePairTitles =
 				getMatchingElementAttributePairTitles({
 					tagName: node.tagName,
 					attributes: Object.fromEntries(
-						node.attrs.map((attr) => [attr.name, attr.value])
+						node.attributes.map((attr) => [attr.name, attr.value])
 					),
 				});
 			this.checkFeaturesSupport(matchingElementAttributePairTitles);
 
 			// Check inline styles
-			const styleAttr = node.attrs.find((attr) => attr.name === 'style');
+			const styleAttr = node.attributes.find((attr) => attr.name === 'style');
 			if (styleAttr !== undefined) {
 				const styleObject = styleToObject(styleAttr.value);
 				if (styleObject !== null) {
@@ -233,20 +234,18 @@ export class DoIUseEmail {
 
 		if ('childNodes' in node) {
 			for (const childNode of node.childNodes) {
-				if (childNode.nodeName === '#text') continue;
-				if (childNode.nodeName === '#comment') continue;
-
-				this.checkHtmlNode(childNode as Element);
+				if (childNode.type === ElementType.Tag) {
+					this.checkHtmlNode(childNode);
+				}
 			}
 		}
 	}
 
 	checkHtml(document: Document) {
 		for (const childNode of document.childNodes) {
-			if (childNode.nodeName === '#text') continue;
-			if (childNode.nodeName === '#comment') continue;
-
-			this.checkHtmlNode(childNode as Element);
+			if (childNode.type === ElementType.Tag) {
+				this.checkHtmlNode(childNode);
+			}
 		}
 	}
 

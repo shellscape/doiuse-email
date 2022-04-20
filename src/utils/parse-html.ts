@@ -1,22 +1,15 @@
 import type { Stylesheet } from 'css';
 import css from 'css';
-import * as parse5 from 'parse5';
-import type {
-	ChildNode,
-	Document,
-	Element,
-	TextNode,
-} from 'parse5/dist/tree-adapters/default';
+import type { Document, Element, Node, Text } from 'domhandler';
+import htmlparser, { ElementType } from 'htmlparser2';
 
-export function findStyleNodes(node: ChildNode): Element[] {
-	if (node.nodeName === '#text') return [];
-	if (node.nodeName === '#comment') return [];
-	if (node.nodeName === 'style') return [node];
+export function findStyleNodes(node: Node): Element[] {
+	if (node.type === ElementType.Style) return [node as Element];
 
 	const styleNodes: Element[] = [];
 
 	if ('childNodes' in node) {
-		for (const childNode of node.childNodes) {
+		for (const childNode of (node as Element).childNodes) {
 			styleNodes.push(...findStyleNodes(childNode));
 		}
 	}
@@ -30,7 +23,8 @@ type ParsedHtml = {
 };
 
 export function parseHtml(html: string): ParsedHtml {
-	const document = parse5.parse(html);
+	const document = htmlparser.parseDocument(html);
+
 	const styleNodes: Element[] = [];
 	for (const childNode of document.childNodes) {
 		styleNodes.push(...findStyleNodes(childNode));
@@ -38,8 +32,8 @@ export function parseHtml(html: string): ParsedHtml {
 
 	const stylesheets: Stylesheet[] = [];
 	for (const styleNode of styleNodes) {
-		const styleTextNode = styleNode.childNodes[0] as TextNode;
-		stylesheets.push(css.parse(styleTextNode.value));
+		const styleTextNode = styleNode.childNodes[0] as Text;
+		stylesheets.push(css.parse(styleTextNode.data));
 	}
 
 	return {

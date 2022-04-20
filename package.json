@@ -32,10 +32,11 @@
 		"commander": "^9.2.0",
 		"css": "^3.0.0",
 		"css-what": "^6.1.0",
+		"domhandler": "^4.3.1",
 		"dot-prop": "^7.2.0",
+		"htmlparser2": "^7.2.0",
 		"micromatch": "^4.0.5",
 		"onetime": "^6.0.0",
-		"parse5": "^7.0.0",
 		"style-to-object": "^0.3.0"
 	},
 	"devDependencies": {
@@ -51,6 +52,9 @@
 		"rollup": "^2.70.2",
 		"typescript": "^4.6.3",
 		"vitest": "^0.9.3"
+	},
+	"resolutions": {
+		"domhandler": "^4"
 	},
 	"publishConfig": {
 		"directory": "dist"
