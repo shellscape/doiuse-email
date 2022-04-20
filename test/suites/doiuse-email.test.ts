@@ -119,6 +119,28 @@ describe('doIUseEmail() works', () => {
 
 	test('getSupportedFeatures()', () => {
 		const doIUseEmail = new DoIUseEmail({ emailClients: ['*'] });
+		const supportedFeatures = doIUseEmail.getSupportedFeatures();
+		const someNon100SupportedFeatureTitles = [
+			'lang attribute',
+			'address',
+			'<body> element',
+		];
+		const some100SupportedFeatureTitles = [
+			'<h1> to <h6> elements',
+			'padding',
+			'margin',
+		];
+		expect(
+			someNon100SupportedFeatureTitles.every(
+				(featureTitle) =>
+					!supportedFeatures.some((feature) => feature.name === featureTitle)
+			)
+		).toBe(true);
+		expect(
+			some100SupportedFeatureTitles.every((featureTitle) =>
+				supportedFeatures.some((feature) => feature.name === featureTitle)
+			)
+		).toBe(true);
 		expect(doIUseEmail.getSupportedFeatures()).toMatchSnapshot();
 	});
 });
