@@ -1,7 +1,12 @@
 import type { Stylesheet } from 'css';
 import css from 'css';
-import type { ChildNode, Document, Element, TextNode } from 'parse5';
-import parse5 from 'parse5';
+import * as parse5 from 'parse5';
+import type {
+	ChildNode,
+	Document,
+	Element,
+	TextNode,
+} from 'parse5/dist/tree-adapters/default';
 
 export function findStyleNodes(node: ChildNode): Element[] {
 	if (node.nodeName === '#text') return [];

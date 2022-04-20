@@ -1,6 +1,6 @@
 import type { Comment, Declaration, Rule, Stylesheet } from 'css';
 import { getProperty } from 'dot-prop';
-import type { Document, Element } from 'parse5';
+import type { Document, Element } from 'parse5/dist/tree-adapters/default';
 import styleToObject from 'style-to-object';
 
 import type { EmailClient } from '~/types/email-client.js';

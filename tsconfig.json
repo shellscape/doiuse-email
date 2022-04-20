@@ -3,7 +3,6 @@
 	"compilerOptions": {
 		"outDir": "dist",
 		"resolveJsonModule": true,
-		"lib": ["ES2021", "DOM"],
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["./src/*"]
