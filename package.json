@@ -15,6 +15,9 @@
 	},
 	"type": "module",
 	"exports": "./src/index.ts",
+	"bin": {
+		"doiuse-email": "./src/bin/cli.js"
+	},
 	"scripts": {
 		"release": "lionp",
 		"prepare": "lion-git-hooks",
@@ -26,6 +29,7 @@
 		"tc": "tsc --noEmit"
 	},
 	"dependencies": {
+		"commander": "^9.2.0",
 		"css": "^3.0.0",
 		"dot-prop": "^7.2.0",
 		"onetime": "^6.0.0",
