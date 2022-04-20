@@ -1,0 +1,25 @@
+// Vitest Snapshot v1
+
+exports[`doIUseEmail() works > parses inline CSS 1`] = `
+{
+  "notes": [
+    "Note about \`<body> element\` support for \`gmail.desktop-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+    "Note about \`<body> element\` support for \`gmail.ios\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+    "Note about \`<body> element\` support for \`gmail.android\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+    "Note about \`<body> element\` support for \`gmail.mobile-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+  ],
+  "success": true,
+}
+`;
+
+exports[`doIUseEmail() works > works with blank email template 1`] = `
+{
+  "notes": [
+    "Note about \`<body> element\` support for \`gmail.desktop-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+    "Note about \`<body> element\` support for \`gmail.ios\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+    "Note about \`<body> element\` support for \`gmail.android\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+    "Note about \`<body> element\` support for \`gmail.mobile-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
+  ],
+  "success": true,
+}
+`;
