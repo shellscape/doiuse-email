@@ -450,6 +450,22 @@ exports[`doIUseEmail() works > should fail with unsupported element-attribute pa
 }
 `;
 
+exports[`doIUseEmail() works > should fail with unsupported element-attribute pairs 2`] = `
+{
+  "errors": [
+    "display:flex is not supported by outlook.windows",
+  ],
+  "notes": [
+    "Note about \`display\` support for \`outlook.windows\`: Buggy. \`display:none\` does not inherit to inner tables.",
+    "Note about \`display\` support for \`outlook.windows\`: Partial. Only supports \`display:none\` (but not on \`<img>\`).",
+  ],
+  "success": false,
+  "warnings": [
+    "display is only partially supported by outlook.windows",
+  ],
+}
+`;
+
 exports[`doIUseEmail() works > should work with selectors 1`] = `
 {
   "notes": [

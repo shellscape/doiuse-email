@@ -98,23 +98,40 @@ describe('doIUseEmail() works', () => {
 	});
 
 	test('should fail with unsupported element-attribute pairs', () => {
-		// iOS Gmail does not support local anchors: https://www.caniemail.com/features/html-anchor-links/
-		const code = outdent`
-			<!doctype html>
-			<html>
-				<body>
-					<div>
-						<div id='header'>Header</div>
-						<a href='#header'></div>
-					</div>
-				</body>
-			</html>
-		`;
-		const result = doIUseEmail(code, {
-			emailClients: ['gmail.ios'],
-		});
-		expect(result.success).toEqual(false);
-		expect(result).toMatchSnapshot();
+		{
+			// iOS Gmail does not support local anchors: https://www.caniemail.com/features/html-anchor-links/
+			const code = outdent`
+				<!doctype html>
+				<html>
+					<body>
+						<div>
+							<div id='header'>Header</div>
+							<a href='#header'></div>
+						</div>
+					</body>
+				</html>
+			`;
+			const result = doIUseEmail(code, {
+				emailClients: ['gmail.ios'],
+			});
+			expect(result.success).toEqual(false);
+			expect(result).toMatchSnapshot();
+		}
+
+		{
+			// Outlook windows doesn't support `display: flex`: https://www.caniemail.com/features/css-display-flex/
+			const code = outdent`
+				<div style='display: flex'>
+					<div>Hello,</div>
+					<div>world!</div>
+				</div>
+			`;
+			const result = doIUseEmail(code, {
+				emailClients: ['outlook.windows'],
+			});
+			expect(result.success).toEqual(false);
+			expect(result).toMatchSnapshot();
+		}
 	});
 
 	test('getSupportedFeatures()', () => {
