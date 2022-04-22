@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/doiuse-email)](https://npmjs.com/package/doiuse-email)
 
-A tool for checking the CSS support of various email clients based on [Can I email](https://caniemail.com).
+A tool for checking the HTML and CSS support of various email clients based on [Can I email](https://caniemail.com).
 \
 Inspired by the excellent [doiuse](https://github.com/anandthakker/doiuse) library.
 
