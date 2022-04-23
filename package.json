@@ -58,5 +58,17 @@
 	},
 	"publishConfig": {
 		"directory": "dist"
-	}
+	},
+	"keywords": [
+		"lint",
+		"html",
+		"css",
+		"doiuse",
+		"email",
+		"gmail",
+		"support",
+		"caniuse",
+		"caniemail",
+		"stylelint"
+	]
 }
