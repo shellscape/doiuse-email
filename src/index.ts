@@ -1,1 +1,1 @@
-export { DoIUseEmail, doIUseEmail } from './utils/doiuse.js';
+export { DoIUseEmail, doIUseEmail } from './doiuse';
