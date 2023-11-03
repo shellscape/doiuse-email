@@ -12,7 +12,7 @@ export const propertyTitles = fromTitleEntries<string[]>(
 		if (title === 'left, right, top, bottom') {
 			return {
 				title,
-				value: ['left', 'right', 'top', 'bottom'],
+				value: ['left', 'right', 'top', 'bottom']
 			};
 		}
 
@@ -23,7 +23,7 @@ export const propertyTitles = fromTitleEntries<string[]>(
 		if (propertyNameRegex.test(trimmedTitle)) {
 			return {
 				title,
-				value: [trimmedTitle],
+				value: [trimmedTitle]
 			};
 		}
 
@@ -32,7 +32,7 @@ export const propertyTitles = fromTitleEntries<string[]>(
 );
 
 export function getMatchingPropertyTitles({
-	propertyName,
+	propertyName
 }: {
 	propertyName: string;
 }): string[] {
@@ -56,14 +56,14 @@ export const propertyValuePairTitles = fromTitleEntries<
 
 		return {
 			title,
-			value: [matches[1]!, matches[2]!] as const,
+			value: [matches[1]!, matches[2]!] as const
 		};
 	})
 );
 
 export function getMatchingPropertyValuePairTitles({
 	propertyName,
-	propertyValue,
+	propertyValue
 }: {
 	propertyName: string;
 	propertyValue: string;
@@ -85,7 +85,7 @@ export const atRuleTitles = fromTitleEntries<string>(
 
 		return {
 			title,
-			value: title.replace(/^@/, ''),
+			value: title.replace(/^@/, '')
 		};
 	})
 );
@@ -107,13 +107,13 @@ export const unitTitles = fromTitleEntries<string>(
 
 		return {
 			title,
-			value: title.replace(/ unit$/, ''),
+			value: title.replace(/ unit$/, '')
 		};
 	})
 );
 
 export function getMatchingUnitTitles({
-	propertyValue,
+	propertyValue
 }: {
 	propertyValue: string;
 }) {
@@ -139,7 +139,7 @@ export const functionTitles = fromTitleEntries</* function name */ string>(
 		if (title === 'CSS Variables (Custom Properties)') {
 			return {
 				title,
-				value: 'var',
+				value: 'var'
 			};
 		}
 
@@ -154,13 +154,13 @@ export const functionTitles = fromTitleEntries</* function name */ string>(
 
 		return {
 			title,
-			value: matches[1]!,
+			value: matches[1]!
 		};
 	})
 );
 
 export function getMatchingFunctionTitles({
-	propertyValue,
+	propertyValue
 }: {
 	propertyValue: string;
 }) {
@@ -296,7 +296,7 @@ const selectorDetectorsMap: Record<string, SelectorDetector> = {
 		}
 
 		return false;
-	},
+	}
 };
 
 export const selectorTitles = fromTitleEntries<SelectorDetector>(
@@ -307,7 +307,7 @@ export const selectorTitles = fromTitleEntries<SelectorDetector>(
 
 		return {
 			title,
-			value: selectorDetectorsMap[title]!,
+			value: selectorDetectorsMap[title]!
 		};
 	})
 );
@@ -333,13 +333,13 @@ export const psuedoSelectorTitles = fromTitleEntries<string>(
 
 		return {
 			title,
-			value: title,
+			value: title
 		};
 	})
 );
 
 export function getMatchingPseudoSelectorTitles({
-	selector,
+	selector
 }: {
 	selector: string;
 }) {
@@ -362,13 +362,13 @@ export const keywordTitles = fromTitleEntries<string>(
 
 		return {
 			title,
-			value: title.replace(/ keyword$/, ''),
+			value: title.replace(/ keyword$/, '')
 		};
 	})
 );
 
 export function getMatchingKeywordTitles({
-	propertyValue,
+	propertyValue
 }: {
 	propertyValue: string;
 }) {

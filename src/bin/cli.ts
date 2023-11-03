@@ -42,7 +42,7 @@ else if (opts.supportedFeatures) {
 	process.stdout.write(
 		JSON.stringify(
 			new DoIUseEmail({
-				emailClients,
+				emailClients
 			}).getSupportedFeatures()
 		)
 	);

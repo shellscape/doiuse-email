@@ -49,7 +49,7 @@ describe('doIUseEmail() works', () => {
 			</html>
 		`;
 		const result = doIUseEmail(code, {
-			emailClients: ['gmail.desktop-webmail'],
+			emailClients: ['gmail.desktop-webmail']
 		});
 		expect(result.success).toEqual(false);
 		expect(result).toMatchSnapshot();
@@ -66,7 +66,7 @@ describe('doIUseEmail() works', () => {
 			</html>
 		`;
 		const result = doIUseEmail(code, {
-			emailClients: ['gmail.desktop-webmail'],
+			emailClients: ['gmail.desktop-webmail']
 		});
 		expect(result.success).toEqual(false);
 		expect(result).toMatchSnapshot();
@@ -91,7 +91,7 @@ describe('doIUseEmail() works', () => {
 			</html>
 		`;
 		const result = doIUseEmail(code, {
-			emailClients: ['gmail.desktop-webmail'],
+			emailClients: ['gmail.desktop-webmail']
 		});
 		expect(result.success).toEqual(true);
 		expect(result).toMatchSnapshot();
@@ -112,7 +112,7 @@ describe('doIUseEmail() works', () => {
 				</html>
 			`;
 			const result = doIUseEmail(code, {
-				emailClients: ['gmail.ios'],
+				emailClients: ['gmail.ios']
 			});
 			expect(result.success).toEqual(false);
 			expect(result).toMatchSnapshot();
@@ -127,7 +127,7 @@ describe('doIUseEmail() works', () => {
 				</div>
 			`;
 			const result = doIUseEmail(code, {
-				emailClients: ['outlook.windows'],
+				emailClients: ['outlook.windows']
 			});
 			expect(result.success).toEqual(false);
 			expect(result).toMatchSnapshot();
@@ -140,12 +140,12 @@ describe('doIUseEmail() works', () => {
 		const someNon100SupportedFeatureTitles = [
 			'lang attribute',
 			'address',
-			'<body> element',
+			'<body> element'
 		];
 		const some100SupportedFeatureTitles = [
 			'<h1> to <h6> elements',
 			'padding',
-			'margin',
+			'margin'
 		];
 		expect(
 			someNon100SupportedFeatureTitles.every(
@@ -168,7 +168,7 @@ describe('doIUseEmail() works', () => {
 			<div style=''></div>
 		`;
 		const result = doIUseEmail(code, {
-			emailClients: ['gmail.ios'],
+			emailClients: ['gmail.ios']
 		});
 		expect(result.success).toEqual(true);
 		expect(result).toMatchSnapshot();
@@ -183,7 +183,7 @@ describe('doIUseEmail() works', () => {
 			<div class='a'></div>
 		`;
 		const result = doIUseEmail(code, {
-			emailClients: ['gmail.mobile-webmail'],
+			emailClients: ['gmail.mobile-webmail']
 		});
 		expect(result.success).toEqual(false);
 		expect(result).toMatchSnapshot();

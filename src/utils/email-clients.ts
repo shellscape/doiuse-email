@@ -36,7 +36,7 @@ export const emailClientsList = [
 	'hey.desktop-webmail',
 	'mail-ru.desktop-webmail',
 	'fastmail.desktop-webmail',
-	'laposte.desktop-webmail',
+	'laposte.desktop-webmail'
 ] as const;
 
 export function getEmailClientsFromOptions(
@@ -91,7 +91,7 @@ export function getEmailClientSupportStatus(
 	} else {
 		return {
 			type: 'partial',
-			noteNumbers,
+			noteNumbers
 		};
 	}
 }

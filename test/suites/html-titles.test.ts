@@ -4,7 +4,7 @@ import caniemail from '~/data/can-i-email.cjs';
 import {
 	attributeTitles,
 	elementAttributePairTitles,
-	elementTitles,
+	elementTitles
 } from '~/utils/titles/html.js';
 
 const allHTMLTitles = caniemail.data
@@ -47,7 +47,7 @@ const expectedElementTitles = [
 	'<table> element',
 	'<textarea> element',
 	'<video> element',
-	'<wbr> element',
+	'<wbr> element'
 ];
 
 const expectedAttributeTitles = [
@@ -67,7 +67,7 @@ const expectedAttributeTitles = [
 	'srcset and sizes attributes',
 	'target attribute',
 	'valign attribute',
-	'width attribute',
+	'width attribute'
 ];
 
 const expectedElementAttributePairTitles = [
@@ -81,7 +81,7 @@ const expectedElementAttributePairTitles = [
 	'<input type="reset"> element',
 	'<input type="submit"> element',
 	'<input type="text"> element',
-	'mailto: links',
+	'mailto: links'
 ];
 
 function expectEqualTitles(
@@ -112,7 +112,7 @@ describe('css titles', () => {
 			{
 				...elementTitles,
 				...attributeTitles,
-				...elementAttributePairTitles,
+				...elementAttributePairTitles
 			},
 			allHTMLTitles
 		);

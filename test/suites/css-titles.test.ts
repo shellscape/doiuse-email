@@ -9,7 +9,7 @@ import {
 	propertyValuePairTitles,
 	psuedoSelectorTitles,
 	selectorTitles,
-	unitTitles,
+	unitTitles
 } from '~/utils/titles/css.js';
 
 const allCSSTitles = canIEmailData.data
@@ -81,7 +81,7 @@ const expectedPropertyTitles = [
 	'white-space',
 	'width property',
 	'word-break',
-	'z-index',
+	'z-index'
 ];
 
 const expectedAtRuleTitles = [
@@ -93,7 +93,7 @@ const expectedAtRuleTitles = [
 	'@media (prefers-color-scheme)',
 	'@media (prefers-reduced-motion)',
 	'@media',
-	'@supports',
+	'@supports'
 ];
 
 const expectedPropertyValuePairTitles = [
@@ -101,7 +101,7 @@ const expectedPropertyValuePairTitles = [
 	'display:grid',
 	'display:none',
 	'flex-direction:column',
-	'flex-wrap: wrap',
+	'flex-wrap: wrap'
 ];
 
 const expectedUnitTitles = [
@@ -120,7 +120,7 @@ const expectedUnitTitles = [
 	'vh unit',
 	'vmax unit',
 	'vmin unit',
-	'vw unit',
+	'vw unit'
 ];
 
 const expectedFunctionTitles = [
@@ -132,7 +132,7 @@ const expectedFunctionTitles = [
 	'max()',
 	'min()',
 	'rgb()',
-	'rgba()',
+	'rgba()'
 ];
 
 const expectedPseudoSelectorTitles = [
@@ -159,7 +159,7 @@ const expectedPseudoSelectorTitles = [
 	'::before',
 	'::first-letter',
 	'::first-line',
-	'::placeholder',
+	'::placeholder'
 ];
 
 const expectedSelectorTitles = [
@@ -173,7 +173,7 @@ const expectedSelectorTitles = [
 	'Grouping selectors',
 	'ID selector',
 	'Type selector',
-	'Universal selector *',
+	'Universal selector *'
 ];
 
 const expectedKeywordTitles = ['!important keyword'];
@@ -228,7 +228,7 @@ describe('css titles', () => {
 				...selectorTitles,
 				...psuedoSelectorTitles,
 				...functionTitles,
-				...keywordTitles,
+				...keywordTitles
 			},
 			allCSSTitles
 		);

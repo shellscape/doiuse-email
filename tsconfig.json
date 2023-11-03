@@ -4,18 +4,10 @@
 		"outDir": "dist",
 		"baseUrl": ".",
 		"paths": {
-			"~/*": [
-				"./src/*"
-			]
+			"~/*": ["./src/*"]
 		},
 		"allowJs": true,
-		"types": [
-			"node"
-		]
+		"types": ["node"]
 	},
-	"include": [
-		"./src",
-		"./typings",
-		"./src/data/can-i-email.json"
-	]
+	"include": ["./src", "./typings", "./src/data/can-i-email.json"]
 }

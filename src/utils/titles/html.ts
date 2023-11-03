@@ -28,8 +28,8 @@ export const elementTitles = fromTitleEntries<string[]>(
 					'nav',
 					'section',
 					'summary',
-					'time',
-				],
+					'time'
+				]
 			};
 		}
 
@@ -46,7 +46,7 @@ export const elementTitles = fromTitleEntries<string[]>(
 
 		return {
 			title,
-			value: [htmlMatches[1]!],
+			value: [htmlMatches[1]!]
 		};
 	})
 );
@@ -68,7 +68,7 @@ export const attributeTitles = fromTitleEntries<string[]>(
 		if (title === 'srcset and sizes attributes') {
 			return {
 				title,
-				value: ['srcset', 'sizes'],
+				value: ['srcset', 'sizes']
 			};
 		}
 
@@ -76,13 +76,13 @@ export const attributeTitles = fromTitleEntries<string[]>(
 
 		return {
 			title,
-			value: [title.replace(/ attribute$/, '')],
+			value: [title.replace(/ attribute$/, '')]
 		};
 	})
 );
 
 export function getMatchingAttributeTitles({
-	attributes,
+	attributes
 }: {
 	attributes: string[];
 }) {
@@ -109,8 +109,8 @@ export const elementAttributePairTitles = fromTitleEntries<{
 				title,
 				value: {
 					element: 'a',
-					attributes: [['href', /^#/], 'name'],
-				},
+					attributes: [['href', /^#/], 'name']
+				}
 			};
 		}
 
@@ -119,8 +119,8 @@ export const elementAttributePairTitles = fromTitleEntries<{
 				title,
 				value: {
 					element: 'a',
-					attributes: [['href', /^mailto:/]],
-				},
+					attributes: [['href', /^mailto:/]]
+				}
 			};
 		}
 
@@ -129,8 +129,8 @@ export const elementAttributePairTitles = fromTitleEntries<{
 				title,
 				value: {
 					element: 'html',
-					attributes: ['⚡4email', 'amp4email'],
-				},
+					attributes: ['⚡4email', 'amp4email']
+				}
 			};
 		}
 
@@ -141,15 +141,15 @@ export const elementAttributePairTitles = fromTitleEntries<{
 			title,
 			value: {
 				element: attributePairMatch[1]!,
-				attributes: [[attributePairMatch[2]!, attributePairMatch[3]!]],
-			},
+				attributes: [[attributePairMatch[2]!, attributePairMatch[3]!]]
+			}
 		};
 	})
 );
 
 export function getMatchingElementAttributePairTitles({
 	tagName,
-	attributes,
+	attributes
 }: {
 	tagName: string;
 	attributes: Record<string, string>;
@@ -158,7 +158,7 @@ export function getMatchingElementAttributePairTitles({
 
 	for (const [
 		elementAttributePairTitle,
-		elementAttributePairValues,
+		elementAttributePairValues
 	] of Object.entries(elementAttributePairTitles)) {
 		// Don't bother trying to match if the elements aren't even equal
 		if (elementAttributePairValues.element !== tagName) continue;

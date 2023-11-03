@@ -1,10 +1,10 @@
-import { createPackageBuilder } from "lionconfig";
+import { createPackageBuilder } from 'lionconfig';
 
 await createPackageBuilder(import.meta, {
-  packageJsonPath: "../package.json",
+	packageJsonPath: '../package.json'
 })
-  .cleanDistFolder()
-  .tsc()
-  .generateBundles({ commonjs: true })
-  .copyPackageFiles()
-  .build();
+	.cleanDistFolder()
+	.tsc()
+	.generateBundles({ commonjs: true })
+	.copyPackageFiles()
+	.build();

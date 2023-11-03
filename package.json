@@ -24,7 +24,7 @@
 		"start": "tun ./src/bin/cli.ts",
 		"test": "vitest run",
 		"lint": "eslint --cache --fix .",
-		"prettier": "prettier --write .",
+		"format": "prettier --write .",
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {

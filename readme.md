@@ -116,7 +116,7 @@ Possible email clients:
   'hey.desktop-webmail',
   'mail-ru.desktop-webmail',
   'fastmail.desktop-webmail',
-  'laposte.desktop-webmail',
+  'laposte.desktop-webmail'
 ];
 ```
 

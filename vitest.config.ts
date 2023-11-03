@@ -5,7 +5,7 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'~': join(import.meta.url, 'src'),
-			'~test': join(import.meta.url, 'test'),
-		},
-	},
+			'~test': join(import.meta.url, 'test')
+		}
+	}
 });
