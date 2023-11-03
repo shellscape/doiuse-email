@@ -3,11 +3,16 @@
 	"compilerOptions": {
 		"outDir": "dist",
 		"baseUrl": ".",
+		"rootDir": "src",
 		"paths": {
-			"~/*": ["./src/*"]
+			"~/*": [
+				"./src/*"
+			]
 		},
-		"allowJs": true,
-		"types": ["node"]
+		"allowJs": true
 	},
-	"include": ["./src", "./typings", "./src/data/can-i-email.json"]
+	"include": [
+		"./src",
+		"./src/data/can-i-email.json"
+	]
 }
