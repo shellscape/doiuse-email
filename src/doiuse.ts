@@ -40,18 +40,61 @@ const atRules = new Set([
   'supports'
 ]);
 
-interface Feature {
+interface SupportedFeature {
   link: string;
   name: string;
   notes?: string[];
 }
 
+type Clients = string[];
+type Feature = string;
+type InternalClients = Set<string>;
+
+interface Issues {
+  errors: Record<Feature, InternalClients>;
+  warnings: Record<Feature, InternalClients>;
+}
+
+interface Messages {
+  errors: string[];
+  notes: string[];
+  warnings: string[];
+}
+
+interface InternalNote {
+  clients: InternalClients;
+  feature: string;
+  note: string;
+}
+
+type Note = InternalNote & {
+  clients: string[];
+};
+
+interface CheckResult {
+  issues: {
+    errors: Record<Feature, Clients>;
+    warnings: Record<Feature, Clients>;
+  };
+  messages: Messages;
+  notes: Note[];
+  success: boolean;
+}
+
+const mapIssues = (issues: Record<Feature, InternalClients>): Record<Feature, Clients> =>
+  Object.fromEntries(Object.entries(issues).map(([key, value]) => [key, Array.from(value)]));
+
+const mapNotes = (notes: Record<string, InternalNote>): Note[] =>
+  Object.values(notes).map(({ clients, feature, note }) => {
+    return { clients: Array.from(clients), feature, note };
+  }) as Note[];
+
 export class DoIUseEmail {
   emailClients: EmailClient[];
   options: DoIUseEmailOptions;
-  warnings: string[] = [];
-  errors: string[] = [];
-  notes: string[] = [];
+  issues: Issues = { errors: {}, warnings: {} };
+  messages: Messages = { errors: [], notes: [], warnings: [] };
+  notes: Record<string, InternalNote> = {};
 
   constructor(options: DoIUseEmailOptions) {
     const emailClients = getEmailClientsFromOptions(options);
@@ -66,7 +109,73 @@ export class DoIUseEmail {
     this.options = options;
   }
 
-  checkFeaturesSupport(featureTitles: string | string[]) {
+  check(code: string): CheckResult {
+    const { document, stylesheets } = parseHtml(code);
+
+    for (const stylesheet of stylesheets) {
+      this.checkStylesheet(stylesheet);
+    }
+
+    this.checkHtml(document);
+
+    return {
+      issues: {
+        errors: mapIssues(this.issues.errors),
+        warnings: mapIssues(this.issues.warnings)
+      },
+      messages: this.messages,
+      notes: mapNotes(this.notes),
+      success: Object.keys(this.issues.errors).length > 0
+    };
+  }
+
+  getSupportedFeatures() {
+    const features = getAllFeatures();
+    const supportedFeatures: SupportedFeature[] = [];
+
+    for (const [featureTitle, featureData] of Object.entries(features)) {
+      const currentFeature: SupportedFeature = {
+        link: featureData.url,
+        name: featureTitle
+      };
+      let isFeatureSupported = true;
+
+      for (const emailClient of this.emailClients) {
+        const { stats } = featureData;
+        const supportMap = getProperty(stats, emailClient);
+
+        // eslint-disable-next-line no-continue
+        if (supportMap === void 0) continue;
+
+        const supportStatus = getEmailClientSupportStatus(supportMap);
+
+        if (supportStatus.type === 'none') {
+          isFeatureSupported = false;
+          break;
+        }
+
+        if (supportStatus.type === 'partial') {
+          currentFeature.notes ??= [];
+
+          for (const noteNumber of supportStatus.noteNumbers ?? []) {
+            currentFeature.notes.push(
+              `Note about \`${featureTitle}\` support for \`${emailClient}\`: ${featureData.notes_by_num![
+                String(noteNumber)
+              ]!}`
+            );
+          }
+        }
+      }
+
+      if (isFeatureSupported) {
+        supportedFeatures.push(currentFeature);
+      }
+    }
+
+    return supportedFeatures;
+  }
+
+  private checkFeaturesSupport(featureTitles: string | string[]) {
     const features = getAllFeatures();
 
     for (const featureTitle of [featureTitles].flat()) {
@@ -85,35 +194,41 @@ export class DoIUseEmail {
 
         const supportStatus = getEmailClientSupportStatus(supportMap);
         if (supportStatus.type === 'none') {
-          this.error(`\`${featureTitle}\` is not supported by \`${emailClient}\``);
+          this.error(featureTitle, emailClient);
         } else if (supportStatus.type === 'partial') {
-          this.warning(`\`${featureTitle}\` is only partially supported by \`${emailClient}\``);
+          this.warning(featureTitle, emailClient);
         }
 
         for (const noteNumber of supportStatus.noteNumbers ?? []) {
-          this.note(
-            `Note about \`${featureTitle}\` support for \`${emailClient}\`: ${feature.notes_by_num![
-              String(noteNumber)
-            ]!}`
-          );
+          this.note(featureTitle, emailClient, feature.notes_by_num![String(noteNumber)]!);
         }
       }
     }
   }
 
-  error(message: string) {
-    this.errors.push(message);
+  private error(feature: string, client: string) {
+    if (!this.issues.errors[feature]) this.issues.errors[feature] = new Set();
+    this.issues.errors[feature].add(client);
+
+    this.messages.errors.push(`\`${feature}\` is not supported by \`${client}\``);
   }
 
-  warning(message: string) {
-    this.warnings.push(message);
+  private warning(feature: string, client: string) {
+    if (!this.issues.warnings[feature]) this.issues.warnings[feature] = new Set();
+    this.issues.warnings[feature].add(client);
+
+    this.messages.warnings.push(`\`${feature}\` is only partially supported by \`${client}\``);
   }
 
-  note(message: string) {
-    this.notes.push(message);
+  private note(feature: string, client: string, note: string) {
+    const key = feature + note;
+    if (!this.notes[key]) this.notes[key] = { clients: new Set(client), feature, note };
+    else this.notes[key].clients.add(client);
+
+    this.messages.notes.push(`Note about \`${feature}\` support for \`${client}\`: ${note}`);
   }
 
-  checkCSSDeclarations(declarations: Array<{ property: string; value: string }>) {
+  private checkCSSDeclarations(declarations: Array<{ property: string; value: string }>) {
     const cssFeatures = getCSSFeatures();
 
     for (const declaration of declarations) {
@@ -152,7 +267,7 @@ export class DoIUseEmail {
     }
   }
 
-  checkCSSSelectors(selectors: string[]) {
+  private checkCSSSelectors(selectors: string[]) {
     for (const selector of selectors) {
       const matchingPseudoSelectorTitles = getMatchingPseudoSelectorTitles({
         selector
@@ -163,7 +278,7 @@ export class DoIUseEmail {
     }
   }
 
-  checkStylesheet(stylesheet: Stylesheet) {
+  private checkStylesheet(stylesheet: Stylesheet) {
     const matchedAtRules: string[] = [];
     for (const stylesheetRule of stylesheet.stylesheet?.rules ?? []) {
       if (stylesheetRule.type === 'rule') {
@@ -192,7 +307,7 @@ export class DoIUseEmail {
     this.checkFeaturesSupport(matchingAtRuleTitles);
   }
 
-  checkHtmlNode(node: Element) {
+  private checkHtmlNode(node: Element) {
     const matchingElementTitles = getMatchingElementTitles({
       tagName: node.tagName
     });
@@ -235,92 +350,14 @@ export class DoIUseEmail {
     }
   }
 
-  checkHtml(document: Document) {
+  private checkHtml(document: Document) {
     for (const childNode of document.childNodes) {
       if (childNode.type === ElementType.Tag) {
         this.checkHtmlNode(childNode as Element);
       }
     }
   }
-
-  check(
-    code: string
-  ): { notes: string[]; warnings: string[] } & (
-    | { success: true }
-    | { errors: string[]; success: false }
-  ) {
-    const { document, stylesheets } = parseHtml(code);
-
-    // Check the CSS
-    for (const stylesheet of stylesheets) {
-      this.checkStylesheet(stylesheet);
-    }
-
-    // Check the HTML
-    this.checkHtml(document);
-
-    if (this.errors.length === 0) {
-      return {
-        notes: this.notes,
-        success: true,
-        warnings: this.warnings
-      };
-    }
-    return {
-      errors: this.errors,
-      notes: this.notes,
-      success: false,
-      warnings: this.warnings
-    };
-  }
-
-  getSupportedFeatures() {
-    const features = getAllFeatures();
-    const supportedFeatures: Feature[] = [];
-
-    for (const [featureTitle, featureData] of Object.entries(features)) {
-      const currentFeature: Feature = {
-        link: featureData.url,
-        name: featureTitle
-      };
-      let isFeatureSupported = true;
-
-      for (const emailClient of this.emailClients) {
-        const { stats } = featureData;
-        const supportMap = getProperty(stats, emailClient);
-
-        // eslint-disable-next-line no-continue
-        if (supportMap === void 0) continue;
-
-        const supportStatus = getEmailClientSupportStatus(supportMap);
-
-        if (supportStatus.type === 'none') {
-          isFeatureSupported = false;
-          break;
-        }
-
-        if (supportStatus.type === 'partial') {
-          currentFeature.notes ??= [];
-
-          for (const noteNumber of supportStatus.noteNumbers ?? []) {
-            currentFeature.notes.push(
-              `Note about \`${featureTitle}\` support for \`${emailClient}\`: ${featureData.notes_by_num![
-                String(noteNumber)
-              ]!}`
-            );
-          }
-        }
-      }
-
-      if (isFeatureSupported) {
-        supportedFeatures.push(currentFeature);
-      }
-    }
-
-    return supportedFeatures;
-  }
 }
 
-export function doIUseEmail(code: string, options: DoIUseEmailOptions) {
-  return new DoIUseEmail(options).check(code);
-}
+export const doIUseEmail = (code: string, options: DoIUseEmailOptions) =>
+  new DoIUseEmail(options).check(code);
