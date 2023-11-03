@@ -1,5 +1,6 @@
 {
 	"name": "doiuse-email",
+	"root": true,
 	"version": "0.4.0",
 	"description": "Lint CSS for email support against caniemail database.",
 	"license": "MIT",
@@ -38,12 +39,14 @@
 		"style-to-object": "^1.0.4"
 	},
 	"devDependencies": {
+		"@tunnel/tun": "^0.2.1",
 		"@types/css": "^0.0.35",
 		"@types/micromatch": "^4.0.4",
 		"@types/node": "^20.8.10",
 		"desm": "^1.3.0",
 		"eslint-define-config": "^1.24.1",
 		"execa": "^8.0.1",
+		"lionconfig": "^3.1.1",
 		"outdent": "^0.8.0",
 		"rollup": "^4.2.0",
 		"typescript": "^5.2.2",

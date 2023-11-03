@@ -1,8 +1,10 @@
-import { execaCommandSync as exec } from 'execa';
-import { chProjectDir, copyPackageFiles, rmDist } from 'lionconfig';
+import { createPackageBuilder } from "lionconfig";
 
-chProjectDir(import.meta.url);
-rmDist();
-exec('tsc');
-exec('tsc-alias');
-await copyPackageFiles({ additionalFiles: ['src/data/can-i-email.json'] });
+await createPackageBuilder(import.meta, {
+  packageJsonPath: "../package.json",
+})
+  .cleanDistFolder()
+  .tsc()
+  .generateBundles({ commonjs: true })
+  .copyPackageFiles()
+  .build();
