@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`doIUseEmail() works > fails with unsupported class selectors 1`] = `
 {
@@ -88,8 +88,8 @@ exports[`doIUseEmail() works > getSupportedFeatures() 1`] = `
     "name": "font-weight",
     "notes": [
       "Note about \`font-weight\` support for \`orange.desktop-webmail\`: Partial support. \`<number>\` values are not supported as per CSS Fonts Level 4 where any \`<number>\` value between 1 and 1000 (inclusive) is a valid value. Only the following numeric values are supported: 100, 200, 300, 400, 500, 600, 700, 800, and 900.",
-      "Note about \`font-weight\` support for \`outlook.windows\`: Partial support. \`<number>\` values are not supported as per CSS Fonts Level 4 where any \`<number>\` value between 1 and 1000 (inclusive) is a valid value. Only the following numeric values are supported: 100, 200, 300, 400, 500, 600, 700, 800, and 900.",
-      "Note about \`font-weight\` support for \`outlook.windows-mail\`: Partial support. \`<number>\` values are not supported as per CSS Fonts Level 4 where any \`<number>\` value between 1 and 1000 (inclusive) is a valid value. Only the following numeric values are supported: 100, 200, 300, 400, 500, 600, 700, 800, and 900.",
+      "Note about \`font-weight\` support for \`outlook.windows\`: Partial support. \`<number>\` values between 0 and 599 are set as normal font weight. \`<number>\` values between 600 and 1000 are set as bold font weight.",
+      "Note about \`font-weight\` support for \`outlook.windows-mail\`: Partial support. \`<number>\` values between 0 and 599 are set as normal font weight. \`<number>\` values between 600 and 1000 are set as bold font weight.",
       "Note about \`font-weight\` support for \`yahoo.desktop-webmail\`: Partial support. \`<number>\` values are not supported as per CSS Fonts Level 4 where any \`<number>\` value between 1 and 1000 (inclusive) is a valid value. Only the following numeric values are supported: 100, 200, 300, 400, 500, 600, 700, 800, and 900.",
       "Note about \`font-weight\` support for \`yahoo.ios\`: Partial support. \`<number>\` values are not supported as per CSS Fonts Level 4 where any \`<number>\` value between 1 and 1000 (inclusive) is a valid value. Only the following numeric values are supported: 100, 200, 300, 400, 500, 600, 700, 800, and 900.",
       "Note about \`font-weight\` support for \`yahoo.android\`: Partial support. \`<number>\` values are not supported as per CSS Fonts Level 4 where any \`<number>\` value between 1 and 1000 (inclusive) is a valid value. Only the following numeric values are supported: 100, 200, 300, 400, 500, 600, 700, 800, and 900.",
@@ -101,7 +101,6 @@ exports[`doIUseEmail() works > getSupportedFeatures() 1`] = `
   {
     "link": "https://www.caniemail.com/features/css-font/",
     "name": "font shorthand",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-letter-spacing/",
@@ -125,7 +124,6 @@ exports[`doIUseEmail() works > getSupportedFeatures() 1`] = `
   {
     "link": "https://www.caniemail.com/features/css-list-style-type/",
     "name": "list-style-type",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-margin/",
@@ -145,6 +143,18 @@ exports[`doIUseEmail() works > getSupportedFeatures() 1`] = `
       "Note about \`margin\` support for \`outlook.ios\`: Partial. Negative values are not supported.",
       "Note about \`margin\` support for \`outlook.android\`: Partial. Negative values are not supported.",
       "Note about \`margin\` support for \`mail-ru.desktop-webmail\`: Partial. Negative values are not supported.",
+    ],
+  },
+  {
+    "link": "https://www.caniemail.com/features/css-max-width/",
+    "name": "max-width",
+    "notes": [
+      "Note about \`max-width\` support for \`apple-mail.ios\`: Partial. Doesn't work on \`<table>\` elements, as per [CSS 2.1 specification](https://www.w3.org/TR/CSS2/visudet.html#min-max-widths).",
+      "Note about \`max-width\` support for \`outlook.windows\`: Partial. Only works on \`<table>\` elements.",
+      "Note about \`max-width\` support for \`outlook.windows-mail\`: Partial. Only works on \`<table>\` elements.",
+      "Note about \`max-width\` support for \`yahoo.ios\`: Partial. Doesn't work on \`<table>\` elements, as per [CSS 2.1 specification](https://www.w3.org/TR/CSS2/visudet.html#min-max-widths).",
+      "Note about \`max-width\` support for \`aol.ios\`: Partial. Doesn't work on \`<table>\` elements, as per [CSS 2.1 specification](https://www.w3.org/TR/CSS2/visudet.html#min-max-widths).",
+      "Note about \`max-width\` support for \`protonmail.ios\`: Partial. Doesn't work on \`<table>\` elements, as per [CSS 2.1 specification](https://www.w3.org/TR/CSS2/visudet.html#min-max-widths).",
     ],
   },
   {
@@ -234,52 +244,42 @@ exports[`doIUseEmail() works > getSupportedFeatures() 1`] = `
   {
     "link": "https://www.caniemail.com/features/css-unit-cm/",
     "name": "cm unit",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-unit-em/",
     "name": "em unit",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-unit-ex/",
     "name": "ex unit",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-unit-in/",
     "name": "in unit",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-unit-mm/",
     "name": "mm unit",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-unit-pc/",
     "name": "pc unit",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-unit-percent/",
     "name": "% unit",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-unit-pt/",
     "name": "pt unit",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-unit-px/",
     "name": "px unit",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-vertical-align/",
     "name": "vertical-align",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/css-width/",
@@ -308,10 +308,6 @@ exports[`doIUseEmail() works > getSupportedFeatures() 1`] = `
   {
     "link": "https://www.caniemail.com/features/html-del/",
     "name": "<del> element",
-    "notes": [
-      "Note about \`<del> element\` support for \`gmail.ios\`: Partial. Not supported with non Gmail accounts.",
-      "Note about \`<del> element\` support for \`gmail.android\`: Partial. Not supported with non Gmail accounts.",
-    ],
   },
   {
     "link": "https://www.caniemail.com/features/html-dir/",
@@ -326,42 +322,38 @@ exports[`doIUseEmail() works > getSupportedFeatures() 1`] = `
   {
     "link": "https://www.caniemail.com/features/html-div/",
     "name": "<div> element",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/html-h1-h6/",
     "name": "<h1> to <h6> elements",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/html-lists/",
     "name": "<ul>, <ol> and <dl>",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/html-p/",
     "name": "<p> element",
-    "notes": undefined,
+  },
+  {
+    "link": "https://www.caniemail.com/features/html-pre/",
+    "name": "<pre> element",
   },
   {
     "link": "https://www.caniemail.com/features/html-span/",
     "name": "<span> element",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/html-strong/",
     "name": "<strong> element",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/html-table/",
     "name": "<table> element",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/html-valign/",
     "name": "valign attribute",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/image-bmp/",
@@ -383,12 +375,10 @@ exports[`doIUseEmail() works > getSupportedFeatures() 1`] = `
   {
     "link": "https://www.caniemail.com/features/image-jpg/",
     "name": "JPG image format",
-    "notes": undefined,
   },
   {
     "link": "https://www.caniemail.com/features/image-png/",
     "name": "PNG image format",
-    "notes": undefined,
   },
 ]
 `;
@@ -476,7 +466,7 @@ exports[`doIUseEmail() works > should fail with unsupported element-attribute pa
 exports[`doIUseEmail() works > should work with selectors 1`] = `
 {
   "notes": [
-    "Note about \`Attribute selector\` support for \`gmail.desktop-webmail\`: Partial. Only supports \`[attr~=value]\` syntax.",
+    "Note about \`Attribute selector\` support for \`gmail.desktop-webmail\`: Partial. Only supports \`[attr~=value]\` syntax. Only \`class\` as an attribute name is known to be supported.",
     "Note about \`<body> element\` support for \`gmail.desktop-webmail\`: Partial. Replaced by a \`<div>\` with supported attributes.",
   ],
   "success": true,

@@ -296,8 +296,7 @@ export class DoIUseEmail {
 		for (const [featureTitle, featureData] of Object.entries(features)) {
 			const currentFeature: Feature = {
 				name: featureTitle,
-				link: featureData.url,
-				notes: undefined
+				link: featureData.url
 			};
 			let isFeatureSupported = true;
 
