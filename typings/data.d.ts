@@ -1,5 +1,5 @@
 declare module '~/data/can-i-email.cjs' {
-	import type { CanIEmailData } from '~/types/features';
+	import type { CanIEmailData } from '~/types/features.js';
 
 	const data: CanIEmailData;
 
