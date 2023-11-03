@@ -1,41 +1,58 @@
 {
-	"name": "doiuse-email",
+	"name": "@jsx-email/doiuse-email",
 	"root": true,
-	"version": "0.4.0",
+	"version": "1.0.0",
 	"description": "Lint CSS for email support against caniemail database.",
 	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
+	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/leondreamed/doiuse-email.git"
+		"url": "https://github.com/shellscape/doiuse-email.git"
 	},
-	"homepage": "https://github.com/leondreamed/doiuse-email#readme",
+	"homepage": "https://github.com/shellscape/doiuse-email#readme",
 	"author": {
 		"name": "Leon Si",
 		"email": "leon@leondreamed.com",
 		"url": "https://leondreamed.com"
 	},
-	"type": "module",
-	"exports": "./src/index.ts",
-	"bin": {
-		"doiuse-email": "./src/bin/cli.js"
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"exports": {
+		".": {
+			"import": {
+				"types": "./dist/index.d.mts",
+				"default": "./dist/index.mjs"
+			},
+			"require": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
+			}
+		},
+		"./package.json": "./package.json"
 	},
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"files": [
+		"dist/**"
+	],
 	"scripts": {
-		"build": "tun ./scripts/build.ts",
-		"start": "tun ./src/bin/cli.ts",
+		"build": "tsup --config ./tsup.config.ts",
+		"prepublishOnly": "pnpm build",
+		"start": "tun ./src/cli.ts",
 		"test": "vitest run",
 		"lint": "eslint --cache --fix .",
 		"format": "prettier --write .",
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"commander": "^11.1.0",
 		"css": "^3.0.0",
 		"css-what": "^6.1.0",
 		"domhandler": "^5.0.3",
-		"dot-prop": "^8.0.2",
 		"htmlparser2": "^9.0.0",
 		"micromatch": "^4.0.5",
-		"onetime": "^6.0.0",
 		"style-to-object": "^1.0.4"
 	},
 	"devDependencies": {
@@ -44,30 +61,35 @@
 		"@types/micromatch": "^4.0.4",
 		"@types/node": "^20.8.10",
 		"desm": "^1.3.0",
+		"dot-prop": "^8.0.2",
+		"eslint-config-shellscape": "^6.0.1",
 		"eslint-define-config": "^1.24.1",
 		"execa": "^8.0.1",
-		"lionconfig": "^3.1.1",
+		"onetime": "^6.0.0",
 		"outdent": "^0.8.0",
-		"rollup": "^4.2.0",
+		"tsup": "^7.2.0",
 		"typescript": "^5.2.2",
 		"vitest": "^0.34.6"
 	},
 	"resolutions": {
 		"domhandler": "^4"
 	},
-	"publishConfig": {
-		"directory": "dist"
-	},
+	"types": "dist/index.d.mts",
 	"keywords": [
-		"lint",
-		"html",
+		"caniemail",
+		"caniuse",
+		"check",
+		"client",
+		"compat",
+		"compatible",
+		"compatibility",
 		"css",
 		"doiuse",
 		"email",
 		"gmail",
-		"support",
-		"caniuse",
-		"caniemail",
-		"stylelint"
+		"html",
+		"lint",
+		"stylelint",
+		"support"
 	]
 }
