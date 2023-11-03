@@ -17,33 +17,39 @@ program
 		'output the supported email features for the email clients specified'
 	)
 	.argument('[file]', 'the path to the HTML file to check')
+	.action(
+		(
+			file: string | undefined,
+			options: { supportedFeatures?: string; emailClients: string }
+		) => {
+			if (options.supportedFeatures !== undefined && file !== undefined) {
+				throw new Error(
+					'Only one of `file` or `--supported-features` should be provided.'
+				);
+			}
+
+			const emailClients = options.emailClients.split(',') as EmailClient[];
+
+			if (file !== undefined) {
+				const htmlCode = fs.readFileSync(program.args[0]!, 'utf8');
+				process.stdout.write(
+					JSON.stringify(doIUseEmail(htmlCode, { emailClients }))
+				);
+			}
+			// If the `--supported-features` flag is provided, output the supported features
+			else if (options.supportedFeatures) {
+				process.stdout.write(
+					JSON.stringify(
+						new DoIUseEmail({
+							emailClients
+						}).getSupportedFeatures()
+					)
+				);
+			} else {
+				throw new Error(
+					'At least one of `file` or `--supported-features` should be provided.'
+				);
+			}
+		}
+	)
 	.parse();
-
-const opts = program.opts<{
-	emailClients: string;
-	supportedFeatures?: boolean;
-}>();
-const file = program.args[0];
-
-if (opts.supportedFeatures !== undefined && file !== undefined) {
-	throw new Error(
-		'Only one of `file` or `--supported-features` should be provided.'
-	);
-}
-
-const emailClients = opts.emailClients.split(',') as EmailClient[];
-
-if (file !== undefined) {
-	const htmlCode = fs.readFileSync(program.args[0]!, 'utf8');
-	process.stdout.write(JSON.stringify(doIUseEmail(htmlCode, { emailClients })));
-}
-// If the `--supported-features` flag is provided, output the supported features
-else if (opts.supportedFeatures) {
-	process.stdout.write(
-		JSON.stringify(
-			new DoIUseEmail({
-				emailClients
-			}).getSupportedFeatures()
-		)
-	);
-}

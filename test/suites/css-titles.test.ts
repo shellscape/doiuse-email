@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import canIEmailData from '~/data/can-i-email.cjs';
+import canIEmailData from '../../src/data/can-i-email.cjs';
 import {
 	atRuleTitles,
 	functionTitles,

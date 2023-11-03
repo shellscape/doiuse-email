@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import caniemail from '~/data/can-i-email.cjs';
+import caniemail from '../../src/data/can-i-email.cjs';
 import {
 	attributeTitles,
 	elementAttributePairTitles,

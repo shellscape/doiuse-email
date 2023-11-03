@@ -1,6 +1,6 @@
 import onetime from 'onetime';
 
-import canIEmailData from '~/data/can-i-email.cjs';
+import canIEmailData from '../data/can-i-email.cjs';
 import type { FeatureData } from '~/types/features.js';
 
 export const getCSSFeatures = onetime((): Record<string, FeatureData> => {
