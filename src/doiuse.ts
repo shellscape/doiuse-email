@@ -4,6 +4,8 @@ import { getProperty } from 'dot-prop';
 import { ElementType } from 'htmlparser2';
 import styleToObject from 'style-to-object';
 
+import type { CssDeclarationAST, CssStylesheetAST } from '@adobe/css-tools';
+
 import type { DoIUseEmailOptions, EmailClient } from './types';
 import { getEmailClientsFromOptions, getEmailClientSupportStatus } from './utils/email-clients';
 import { getAllFeatures, getCSSFeatures } from './utils/features';
@@ -23,7 +25,6 @@ import {
   getMatchingElementAttributePairTitles,
   getMatchingElementTitles
 } from './utils/titles/html';
-import { CssDeclarationAST, CssRuleAST, CssStylesheetAST } from '@adobe/css-tools';
 
 const atRules = new Set([
   'charset',
@@ -167,13 +168,13 @@ export class DoIUseEmail {
     const matchedAtRules: string[] = [];
     for (const stylesheetRule of stylesheet.stylesheet?.rules ?? []) {
       if (stylesheetRule.type === 'rule') {
-        const rule = stylesheetRule as CssRuleAST;
+        const rule = stylesheetRule;
         const declarations = (rule.declarations ?? [])
           .filter((declaration) => declaration.type !== 'comment')
           .map((declaration) => {
             return {
-              property: (declaration as CssDeclarationAST).property!,
-              value: (declaration as CssDeclarationAST).value!
+              property: (declaration as CssDeclarationAST).property,
+              value: (declaration as CssDeclarationAST).value
             };
           });
 
@@ -181,8 +182,8 @@ export class DoIUseEmail {
         this.checkCSSSelectors(rule.selectors ?? []);
       }
 
-      if (atRules.has(stylesheetRule.type!)) {
-        matchedAtRules.push(stylesheetRule.type!);
+      if (atRules.has(stylesheetRule.type)) {
+        matchedAtRules.push(stylesheetRule.type);
       }
     }
 

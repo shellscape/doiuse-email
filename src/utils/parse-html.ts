@@ -1,4 +1,5 @@
-import css, { CssStylesheetAST } from '@adobe/css-tools';
+import type { CssStylesheetAST } from '@adobe/css-tools';
+import css from '@adobe/css-tools';
 import type { Document, Element, Node, Text } from 'domhandler';
 import * as htmlparser from 'htmlparser2';
 
