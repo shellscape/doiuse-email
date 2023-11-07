@@ -1,5 +1,5 @@
-import type { Stylesheet } from 'css';
-import css from 'css';
+import type { CssStylesheetAST } from '@adobe/css-tools';
+import css from '@adobe/css-tools';
 import type { Document, Element, Node, Text } from 'domhandler';
 import * as htmlparser from 'htmlparser2';
 
@@ -19,7 +19,7 @@ export function findStyleNodes(node: Node): Element[] {
 
 interface ParsedHtml {
   document: Document;
-  stylesheets: Stylesheet[];
+  stylesheets: CssStylesheetAST[];
 }
 
 export function parseHtml(html: string): ParsedHtml {
@@ -30,7 +30,7 @@ export function parseHtml(html: string): ParsedHtml {
     styleNodes.push(...findStyleNodes(childNode));
   }
 
-  const stylesheets: Stylesheet[] = [];
+  const stylesheets: CssStylesheetAST[] = [];
   for (const styleNode of styleNodes) {
     const styleTextNode = styleNode.childNodes[0] as Text | undefined;
     if (styleTextNode !== void 0) {

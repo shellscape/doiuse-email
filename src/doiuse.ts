@@ -1,9 +1,10 @@
-import type { Declaration, Rule, Stylesheet } from 'css';
 import type { Document, Element } from 'domhandler';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { getProperty } from 'dot-prop';
 import { ElementType } from 'htmlparser2';
 import styleToObject from 'style-to-object';
+
+import type { CssDeclarationAST, CssStylesheetAST } from '@adobe/css-tools';
 
 import type { DoIUseEmailOptions, EmailClient } from './types';
 import { getEmailClientsFromOptions, getEmailClientSupportStatus } from './utils/email-clients';
@@ -163,17 +164,17 @@ export class DoIUseEmail {
     }
   }
 
-  checkStylesheet(stylesheet: Stylesheet) {
+  checkStylesheet(stylesheet: CssStylesheetAST) {
     const matchedAtRules: string[] = [];
     for (const stylesheetRule of stylesheet.stylesheet?.rules ?? []) {
       if (stylesheetRule.type === 'rule') {
-        const rule = stylesheetRule as Rule;
+        const rule = stylesheetRule;
         const declarations = (rule.declarations ?? [])
           .filter((declaration) => declaration.type !== 'comment')
           .map((declaration) => {
             return {
-              property: (declaration as Declaration).property!,
-              value: (declaration as Declaration).value!
+              property: (declaration as CssDeclarationAST).property,
+              value: (declaration as CssDeclarationAST).value
             };
           });
 
@@ -181,8 +182,8 @@ export class DoIUseEmail {
         this.checkCSSSelectors(rule.selectors ?? []);
       }
 
-      if (atRules.has(stylesheetRule.type!)) {
-        matchedAtRules.push(stylesheetRule.type!);
+      if (atRules.has(stylesheetRule.type)) {
+        matchedAtRules.push(stylesheetRule.type);
       }
     }
 
