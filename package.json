@@ -40,6 +40,7 @@
     "lint": "eslint --cache --fix .",
     "prepare": "husky",
     "prepublishOnly": "pnpm build",
+    "release": "versioner --dry --no-commit-scopes --target $(pwd)",
     "start": "tun ./src/cli.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
@@ -73,6 +74,7 @@
     "style-to-object": "^1.0.4"
   },
   "devDependencies": {
+    "@dot/versioner": "^0.3.4",
     "@tunnel/tun": "^0.2.1",
     "@types/css": "^0.0.35",
     "@types/micromatch": "^4.0.4",
