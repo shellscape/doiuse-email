@@ -74,7 +74,7 @@
     "style-to-object": "^1.0.4"
   },
   "devDependencies": {
-    "@dot/versioner": "^0.3.4",
+    "@dot/versioner": "^0.4.0",
     "@tunnel/tun": "^0.2.1",
     "@types/css": "^0.0.35",
     "@types/micromatch": "^4.0.4",

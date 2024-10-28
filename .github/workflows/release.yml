@@ -70,7 +70,7 @@ jobs:
         run: pnpm build
 
       - name: Release
-        run: echo no-op
+        run: pnpm release
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

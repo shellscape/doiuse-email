@@ -31,8 +31,8 @@ importers:
         version: 1.0.4
     devDependencies:
       '@dot/versioner':
-        specifier: ^0.3.4
-        version: 0.3.4
+        specifier: ^0.4.0
+        version: 0.4.0
       '@tunnel/tun':
         specifier: ^0.2.1
         version: 0.2.1
@@ -104,8 +104,8 @@ packages:
     resolution: {integrity: sha512-ECraEVJWv2f2mWK93lYiefUkphStVlKD6yKDzisuoEmxuLKrxO9iGetHK2DoEAkj7sxjE886n0OUVVCUx0YPNg==}
     engines: {node: '>=18'}
 
-  '@dot/versioner@0.3.4':
-    resolution: {integrity: sha512-BVejaRMZ+KK10LlSd+mtGuiy0nS6NjWD2vR1VYa7vkANq+L6WOkGwVFUEwDz50UwnqWJLBw4uh/AqSGGBn5z0A==}
+  '@dot/versioner@0.4.0':
+    resolution: {integrity: sha512-PWlX23Xi2LEDy5/WWxxQmmavhhOjfnj8wK4kxQNPsIiwpuBzBOLKOao3oqdiQ4/f+NapQaowmIDrnFnlPKgpMA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -2556,7 +2556,7 @@ snapshots:
       loglevelnext: 6.0.0
       p-defer: 3.0.0
 
-  '@dot/versioner@0.3.4':
+  '@dot/versioner@0.4.0':
     dependencies:
       '@dot/log': 0.1.5
       chalk: 4.1.2
