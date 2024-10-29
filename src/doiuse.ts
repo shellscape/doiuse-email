@@ -1,5 +1,4 @@
 import type { Document, Element } from 'domhandler';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { getProperty } from 'dot-prop';
 import { ElementType } from 'htmlparser2';
 import styleToObject from 'style-to-object';
@@ -93,9 +92,9 @@ export class DoIUseEmail {
 
         for (const noteNumber of supportStatus.noteNumbers ?? []) {
           this.note(
-            `Note about \`${featureTitle}\` support for \`${emailClient}\`: ${feature.notes_by_num![
-              String(noteNumber)
-            ]!}`
+            `Note about \`${featureTitle}\` support for \`${emailClient}\`: ${
+              feature.notes_by_num![String(noteNumber)]
+            }`
           );
         }
       }
@@ -305,9 +304,9 @@ export class DoIUseEmail {
 
           for (const noteNumber of supportStatus.noteNumbers ?? []) {
             currentFeature.notes.push(
-              `Note about \`${featureTitle}\` support for \`${emailClient}\`: ${featureData.notes_by_num![
-                String(noteNumber)
-              ]!}`
+              `Note about \`${featureTitle}\` support for \`${emailClient}\`: ${
+                featureData.notes_by_num![String(noteNumber)]
+              }`
             );
           }
         }

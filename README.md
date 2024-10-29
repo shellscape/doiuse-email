@@ -1,9 +1,11 @@
-# doiuse-email
+[![libera manifesto](https://img.shields.io/badge/libera-manifesto-lightgrey.svg)](https://liberamanifesto.com)
 
-[![npm version](https://img.shields.io/npm/v/doiuse-email)](https://npmjs.com/package/doiuse-email)
+# @jsx-email/doiuse-email
 
-A tool for checking the HTML and CSS support of various email clients based on [Can I email](https://caniemail.com).
-\
+This package is a part of the [`jsx-email`](https://jsx.email) suite of tools.
+
+`@jsx-email/doiuse-email` is a tool for checking the HTML and CSS support of various email clients based on [Can I email](https://caniemail.com).
+
 Inspired by the excellent [doiuse](https://github.com/anandthakker/doiuse) library.
 
 ## Installation
@@ -11,7 +13,7 @@ Inspired by the excellent [doiuse](https://github.com/anandthakker/doiuse) libra
 Install the package from npm using your favourite package manager:
 
 ```shell
-npm install doiuse-email
+npm install @jsx-email/doiuse-email
 ```
 
 ## Programmatic Usage
@@ -19,7 +21,7 @@ npm install doiuse-email
 Import it and run it by calling `doIUseEmail(html: string, options: DoIUseOptions)`:
 
 ```typescript
-import { doIUseEmail } from 'doiuse-email';
+import { doIUseEmail } from '@jsx-email/doiuse-email';
 
 const result = doIUseEmail(
   `
@@ -47,20 +49,6 @@ console.log(result);
 */
 
 // Output is based on https://caniemail.com
-```
-
-## CLI Usage
-
-You can also call `doiuse-email` from the CLI:
-
-```shell
-doiuse-email --email-clients='gmail.*' myfile.html
-```
-
-The command will output a JSON representing the support for the HTML in the provided file. It's recommended to use it with a tool like [jq](https://github.com/stedolan/jq) for more human-readable output:
-
-```shell
-doiuse-email --email-clients='gmail.*' myfile.html | jq
 ```
 
 ## API
