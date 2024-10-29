@@ -1,5 +1,13 @@
 # @jsx-email/doiuse-email ChangeLog
 
+## v1.0.4
+
+_2024-10-29_
+
+### Bugfixes
+
+- fix: move dot-prop to deps (#13)
+
 ## v1.0.3
 
 _2024-10-29_
